@@ -1,7 +1,7 @@
-# | Biznes |
+# Biznes
 "Biznesem" są bezpośredni użytkownicy końcowi, czyli osoby zainteresowane tematyką zdrowotną oraz gracze poszukujący logiczno-detektywistycznych gier.
 
-# | Domena biznesowa |
+# Domena biznesowa
 ### Stan obecny
 Obecnie docelowi użytkownicy, chcąc poszerzać swoją wiedzę o chorobach, zazwyczaj opierają się na pasywnych metodach nauki – czytają wykłady lub podręczniki, oglądając biologiczno-medyczne filmiki albo nawet korzystać ze sztucznej inteligencji. Jest to proces monotonny, który w ogóle nie uczy szybkiego myślenia, ani łączenia faktów w sytuacjach stresowych. Z kolei fani łamigłówek grają w tradycyjne gry detektywistyczne, w których brakuje medycznego podłoża.
 

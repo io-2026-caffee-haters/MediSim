@@ -169,6 +169,7 @@ Test: Uruchomienie aplikacji w rozdzielczości 1920×1080 i weryfikacja czy wszy
 **Umiejętności:** 
 - Doświadczony gracz na PC.
 - Wiedza medyczna: w połowie 4. sezonu "Dr. House'a".
+
 **Cele:** Oglądany przez niego serial zainteresował go tematem i chciałby poczuć się jak doktor.
 **Frustracje:** Zbyt zaawansowane symulatory medyczne, obecność tocznia na liście chorób, bo przecież wie, że to nigdy nie jest toczeń.
 **Zachowania:** Gra głównie wieczorami po pracy, aby się zrelaksować i pospędzać miło czas.

@@ -83,7 +83,7 @@ System powinien umożliwiać:
 **S-05 Platforma sprzętowa**
 System powinien działać na komputerze osobistym z systemem operacyjnym Microsoft Windows w wersji 10 lub nowszej. 
 Minimalne wymagania sprzętowe: 
-- rocesor: dwurdzeniowy 2 GHz lub lepszy 
+- procesor: dwurdzeniowy 2 GHz lub lepszy 
 - pamięć RAM: minimum 4 GB 
 - karta graficzna obsługująca DirectX 11 
 - miejsce na dysku: minimum 1 GB 

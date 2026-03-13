@@ -20,7 +20,7 @@ Użytkownicy docelowi z radością przyjęliby rozwiązanie, które zastąpi bie
 - **Odwracanie uwagi:** Nagłe powiadomienie z innej aplikacji rozpraszające uwagę w trakcie rozgrywki.
 * **Zbyt surowa kara:** Frustracja, gdy jedna pomyłka skraca czas gry o 10 sekund, co kończy sesję zbyt szybko.
 * **Nieczytelny UI:** Problem z rozróżnieniem symptomów z wyglądu postaci albo niezbyt przyzwoita oprawa graficzna całej gry.
-* **Nielogiczne diagnozy:** Zbyt duża ilość ilość chorób o podobnych symptomach może znacznie utrudnić wybór diagnozy.
+* **Nielogiczne diagnozy:** Zbyt duża ilość chorób o podobnych symptomach może znacznie utrudnić wybór diagnozy.
 
 ---
 

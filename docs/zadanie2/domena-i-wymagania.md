@@ -120,8 +120,7 @@ Minimalne wymagania sprzętowe:
 - procesor: dwurdzeniowy 2 GHz lub lepszy 
 - pamięć RAM: minimum 4 GB 
 - karta graficzna obsługująca DirectX 11 
-- miejsce na dysku: minimum 1 GB 
-- Wymagania funkcjonalne: 
+- miejsce na dysku: minimum 1 GB  
 
 # Wymagania funkcjonalne:
 

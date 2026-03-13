@@ -137,7 +137,7 @@ Test: Test długotrwałej rozgrywki.
 Interfejs użytkownika musi umożliwiać wykonanie każdej akcji w maksymalnie 3 kliknięciach. 
 Test: Test użyteczności interfejsu. 
 
-**N-04 Przenośność **
+**N-04 Przenośność**
 System musi działać na komputerach z Windows 10 i Windows 11. 
 Test: Uruchomienie aplikacji na obu systemach. 
 

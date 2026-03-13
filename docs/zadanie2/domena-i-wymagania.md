@@ -13,7 +13,7 @@ Użytkownicy docelowi z radością przyjęliby rozwiązanie, które zastąpi bie
 * **Kontekst nr.1:** Użytkownik znajduje się w bibliotece przy swojej uczelni. Ma za 20 min egzamin z medycyny i przez brak zmobilizowania do wyciągnięcia książki, aby się douczyć to wyciąga laptopa oraz odpala grę dla przypomnienia podstaw.
 * **Kontekst nr.2:** Użytkownik znajduje się w swoim mieszkaniu. Jest znudzony, większość gier dla niego to monotonia, a żaden z filmików na YT nie daje mu satysfakcji. Dlatego też daje szansę nowej grze, którą przypadkowo znalazł na internecie.
 * **Urządzenia:** Laptop / PC z systemem Windows.
-* **Główny cel:** Poprawna diagnoza jak największej liczby pacjentów i pobicie własnego rekordu punktowego.
+* **Główny cel:** Poprawna diagnoza jak największej liczby pacjentów i pobicie własnego rekordu punktowego, chwilowa powtórka podstawowych informacji medycznych.
 
 ### **Frustracje użytkownika:**
 

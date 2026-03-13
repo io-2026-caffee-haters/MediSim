@@ -8,6 +8,40 @@ Obecnie docelowi użytkownicy, chcąc poszerzać swoją wiedzę o chorobach, zaz
 ### Przyszły proces
 Użytkownicy docelowi z radością przyjęliby rozwiązanie, które zastąpi bierne przyswajanie wiedzy interaktywnym symulatorem zmuszającym do praktycznej dedukcji. Aplikacja dostarczy środowisko, w którym poprzez zarządzanie "czasem klinicznym", analizę wyglądu pacjentów oraz przeprowadzanie wywiadów medycznych, użytkownik utrwali wiadomości diagnostyczne. System ten nie tylko wspomoże zapamiętywanie informacji i przygotuje do podejmowania decyzji pod presją czasu, ale również dostarczy rozrywki graczom poszukującym wyzwań logicznych.
 
+# Persony
+
+**Persona 1: Zmęczony Student Medycyny**
+
+**Imię i nazwisko:** Kacper Skoczylas 
+
+**Wiek i rola:** 20 lat, student 2-go roku medycyny w Krakowie 
+
+**Umiejętności:** Biegły w obsłudze komuterów. 
+
+**Cele:** Szuka relaksu i odskoczni od nauki. Chce poćwiczyć dedukcję i szybkie łączenie faktów, ale bez presji o oceny. 
+
+**Frustracje:** Nudne, sztywne symulatory medyczne oraz gry edukacyjne. 
+
+**Zachowania:** Odpala grę przed snem (20-30 minut), żeby odmóżdżyć się po ciężkim dniu na uczelni.
+
+**Persona 2: Sympatyczny Fanatyk Seriali**
+
+**Imię i nazwisko:** Norbert Kabanosik 
+
+**Wiek i rola:** 16 lat, uczeń i zapalony fan doktora House'a 
+
+**Umiejętności:** Historyjka
+- Doświadczony gracz na PC.
+- Wiedza medyczna: w połowie 4. sezonu "Dr. House'a".
+
+**Cele:** Oglądany przez niego serial zainteresował go tematem i chciałby poczuć się jak doktor.
+
+**Frustracje:** Zbyt zaawansowane symulatory medyczne, obecność tocznia na liście chorób, bo przecież wie, że to nigdy nie jest toczeń.
+
+**Zachowania:** Gra głównie wieczorami po pracy, aby się zrelaksować i pospędzać miło czas.
+
+# Podróże użytkownika
+
 ### **Parametry podróży:**
 
 * **Kontekst nr.1:** Użytkownik znajduje się w bibliotece przy swojej uczelni. Ma za 20 min egzamin z medycyny i przez brak zmobilizowania do wyciągnięcia książki, aby się douczyć to wyciąga laptopa oraz odpala grę dla przypomnienia podstaw.
@@ -152,35 +186,3 @@ Test: Zamknięcie aplikacji w trakcie działania i ponowne uruchomienie(zapisany
 **N-07 Czytelność interfejsu**
 UI powinno być czytelne na monitorze 1920×1080. 
 Test: Uruchomienie aplikacji w rozdzielczości 1920×1080 i weryfikacja czy wszystkie elementy są widoczne.
-
- # Persony
-
-**Persona 1: Zmęczony Student Medycyny**
-
-**Imię i nazwisko:** Kacper Skoczylas 
-
-**Wiek i rola:** 20 lat, student 2-go roku medycyny w Krakowie 
-
-**Umiejętności:** Biegły w obsłudze komuterów. 
-
-**Cele:** Szuka relaksu i odskoczni od nauki. Chce poćwiczyć dedukcję i szybkie łączenie faktów, ale bez presji o oceny. 
-
-**Frustracje:** Nudne, sztywne symulatory medyczne oraz gry edukacyjne. 
-
-**Zachowania:** Odpala grę przed snem (20-30 minut), żeby odmóżdżyć się po ciężkim dniu na uczelni.
-
-**Persona 2: Sympatyczny Fanatyk Seriali**
-
-**Imię i nazwisko:** Norbert Kabanosik 
-
-**Wiek i rola:** 16 lat, uczeń i zapalony fan doktora House'a 
-
-**Umiejętności:** Historyjka
-- Doświadczony gracz na PC.
-- Wiedza medyczna: w połowie 4. sezonu "Dr. House'a".
-
-**Cele:** Oglądany przez niego serial zainteresował go tematem i chciałby poczuć się jak doktor.
-
-**Frustracje:** Zbyt zaawansowane symulatory medyczne, obecność tocznia na liście chorób, bo przecież wie, że to nigdy nie jest toczeń.
-
-**Zachowania:** Gra głównie wieczorami po pracy, aby się zrelaksować i pospędzać miło czas.

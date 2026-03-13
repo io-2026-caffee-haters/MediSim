@@ -30,7 +30,7 @@ Użytkownicy docelowi z radością przyjęliby rozwiązanie, które zastąpi bie
 
 **Wiek i rola:** 16 lat, uczeń i zapalony fan doktora House'a 
 
-**Umiejętności:** Historyjka
+**Umiejętności:**
 - Doświadczony gracz na PC.
 - Wiedza medyczna: w połowie 4. sezonu "Dr. House'a".
 

@@ -1,4 +1,4 @@
-‘‘‘mermaid
+```mermaid
 flowchart LR
     %% Definicja aktorów
     Gracz(("👤 Gracz"))
@@ -33,4 +33,4 @@ flowchart LR
     U5 --- System
     U6 --- System
     U7 --- System
-‘‘‘
+```

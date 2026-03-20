@@ -98,7 +98,7 @@
 
 **Warunki początkowe:**
 - Gracz ma aktywnego pacjenta.
-- Licznik czasu klinicznego > 0 lub równy 0, wtedy automatyczna błędna diagnoza.
+- Licznik czasu klinicznego > 0.
 - Dostępna jest lista możliwych chorób.
 
 **Warunki końcowe:**

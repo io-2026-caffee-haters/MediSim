@@ -44,7 +44,6 @@ classDiagram
     class Disease {
         +string id
         +string name
-        +string description
         +List~string~ symptoms
     }
     class Symptom {

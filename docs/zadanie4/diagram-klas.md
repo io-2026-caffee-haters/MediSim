@@ -1,3 +1,4 @@
+```mermaid
 ---
 title: MediSim
 ---
@@ -89,3 +90,4 @@ classDiagram
     Disease o-- Symptom : Opisuje powiązania
     MedicalTest ..> Patient : Analizuje
     MedicalTest ..> Symptom : Odkrywa
+```

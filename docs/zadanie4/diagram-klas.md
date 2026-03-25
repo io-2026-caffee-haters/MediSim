@@ -86,7 +86,7 @@ classDiagram
     DatabaseManager ..> MedicalTest : Tworzy listę wszystkich
     Patient --> Disease : Cierpi na
     Patient *-- Symptom : Posiada zestaw
-    Disease o-- Symptom : Opisuje powiązania
+    Disease o-- Symptom : Posiada zestaw
     MedicalTest ..> Patient : Analizuje
     MedicalTest ..> Symptom : Odkrywa
 ```

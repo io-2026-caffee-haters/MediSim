@@ -126,8 +126,10 @@ classDiagram
     DatabaseManager ..> Disease : ładuje z diseases.json
     DatabaseManager ..> Symptom : ładuje z symptoms.json
     DatabaseManager ..> MedicalTest : ładuje z medicalTests.json
+    DatabaseManager ..> Patient : dostarcza bazowy sprite
 
     Patient --> Disease : cierpi na (jedna choroba)
+    Patient --> Symptom : używa do nakładek
     Disease o-- Symptom : posiada zestaw (przez symptomIds)
     MedicalTest ..> Symptom : może wykryć (wykrywanyPrzezBadania)
 

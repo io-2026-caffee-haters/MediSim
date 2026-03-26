@@ -30,11 +30,13 @@ classDiagram
         -List~Disease~ diseasePool
         -List~Symptom~ symptomPool
         -List~MedicalTest~ testPool
+        -List~Sprite~ baseSprites
         +void LoadDataFromJSON()
         +void SaveGameState(SaveData data)
         +SaveData LoadGameState()
         +bool DoesSaveExist()
         +Disease GetRandomDisease()
+        +Sprite GetRandomBaseSprite()
         +Disease GetDiseaseById(int id)
         +Symptom GetSymptomById(int id)
         +MedicalTest GetTestById(int id)
@@ -63,9 +65,13 @@ classDiagram
     %% Modele danych
     class Patient {
         -Disease actualDisease
+        -SpriteRenderer spriteRenderer
+        -List~SpriteRenderer~ overlayRenderers
         +void Initialize(Disease disease)
         +string GetInterviewText()
         +List~Symptom~ GetSymptomsDetectableByTest(MedicalTest test)
+        -void ApplyOverlays(DatabaseManager db)
+        -void ClearOverlays()
     }
 
     class Disease {
@@ -82,6 +88,7 @@ classDiagram
         +List~int~ wykrywanyPrzezBadania
         +string interviewLine
         +bool widocznyNaWygladzie
+        +string overlayPath
     }
 
     class MedicalTest {

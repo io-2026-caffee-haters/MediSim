@@ -3,7 +3,7 @@
 title: MediSim – Diagram klas
 ---
 classDiagram
-    %% Główny manager
+    %% Główny manager rozgrywki
     class GameManager {
         -int playerScore
         -float clinicalTime
@@ -11,13 +11,18 @@ classDiagram
         -Patient currentPatient
         -List~MedicalTest~ availableTests
         -Dictionary~MedicalTest, float~ testCooldowns
-        +StartNewGame() void
-        +EvaluateDiagnosis(string diseaseName) void
-        +PerformTest(MedicalTest test) void
-        +GetRemainingCooldown(MedicalTest test) float
-        +AddTime(float amount) void
-        +AddScore(int amount) void
-        -EndGame() void
+        +static bool StartNewGameFlag
+        +static bool IsTimedMode
+        +static SaveData LoadedSaveData
+        +void StartNewGame(bool timedMode)
+        +void LoadGame(SaveData data)
+        +void EvaluateDiagnosis(string diseaseName)
+        +void PerformTest(MedicalTest test)
+        +float GetRemainingCooldown(MedicalTest test)
+        +void AddTime(float amount)
+        +void AddScore(int amount)
+        -void EndGame()
+        -void SpawnNewPatient()
     }
 
     class DatabaseManager {
@@ -25,27 +30,38 @@ classDiagram
         -List~Disease~ diseasePool
         -List~Symptom~ symptomPool
         -List~MedicalTest~ testPool
-        +LoadDataFromJSON() void
-        +SaveGameState(SaveData data) void
-        +LoadGameState() SaveData
-        +DoesSaveExist() bool
-        +GetRandomDisease() Disease
-        +GetSymptomById(int id) Symptom
-        +GetTestById(int id) MedicalTest
+        +void LoadDataFromJSON()
+        +void SaveGameState(SaveData data)
+        +SaveData LoadGameState()
+        +bool DoesSaveExist()
+        +Disease GetRandomDisease()
+        +Disease GetDiseaseById(int id)
+        +Symptom GetSymptomById(int id)
+        +MedicalTest GetTestById(int id)
     }
 
     class UIManager {
-        -GameObject mainMenuPanel
-        -GameObject gameHUDPanel
-        -GameObject journalPanel
-        -GameObject testPanel
         -List~TestButton~ testButtons
-        +ShowMainMenu() void
-        +UpdateHUD(float time, int score) void
-        +ToggleJournal() void
-        +ShowDialogue(string text) void
-        +ShowTestResult(string message) void
-        +UpdateTestButtons() void
+        +void UpdateHUD(float time, int score)
+        +void ToggleJournal()
+        +void ShowDialogue(string text)
+        +void ShowTestResult(string message)
+        +void ShowMessage(string message)
+        +void ShowGameOver()
+        +void UpdateTestButtons()
+    }
+
+    class MenuManager {
+        -Button loadGameButton
+        -GameManager gameManagerRef
+        -DatabaseManager dbManagerRef
+        -UIManager uiManagerRef
+        +void Awake()
+        +void OnNewGameClicked()
+        +void OnFreePlayClicked()
+        +void OnLoadGameClicked()
+        +void OnQuitClicked()
+        -void CheckLoadButtonInteractable()
     }
 
     %% Modele danych
@@ -98,10 +114,10 @@ classDiagram
     }
 
     %% Relacje
-    GameManager --> DatabaseManager : pobiera dane / zapisuje stan
-    GameManager --> UIManager : steruje widokami, dostarcza dane cooldownów
+    GameManager --> DatabaseManager : używa do pobierania danych / zapisu
+    GameManager --> UIManager : aktualizuje interfejs, odbiera komunikaty
     GameManager o-- Patient : zarządza bieżącym pacjentem
-    GameManager --> MedicalTest : używa (wywołuje Execute)
+    GameManager --> MedicalTest : wywołuje Execute
     GameManager *-- Journal : posiada
 
     DatabaseManager ..> SaveData : serializuje/deserializuje JSON
@@ -116,4 +132,8 @@ classDiagram
     UIManager --> GameManager : odczytuje cooldowny przez GetRemainingCooldown
     UIManager --> Patient : wyświetla informacje
     UIManager --> Journal : otwiera / aktualizuje
+
+    MenuManager --> GameManager : wywołuje StartNewGame / LoadGame
+    MenuManager --> DatabaseManager : sprawdza istnienie zapisu
+    MenuManager --> UIManager : przełącza sceny (nie bezpośrednio panele)
 ```

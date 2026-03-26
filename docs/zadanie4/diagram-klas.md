@@ -62,7 +62,6 @@ classDiagram
 
     %% Modele danych
     class Patient {
-        +string name
         -Disease actualDisease
         +void Initialize(Disease disease)
         +string GetInterviewText()

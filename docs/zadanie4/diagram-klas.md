@@ -119,7 +119,7 @@ classDiagram
     DatabaseManager ..> SaveData : serializuje/deserializuje JSON
     DatabaseManager ..> Disease : ładuje z diseases.json
     DatabaseManager ..> Symptom : ładuje z symptoms.json
-    DatabaseManager ..> MedicalTest : ładuje z tests.json
+    DatabaseManager ..> MedicalTest : ładuje z medicalTests.json
 
     Patient --> Disease : cierpi na (jedna choroba)
     Disease o-- Symptom : posiada zestaw (przez symptomIds)

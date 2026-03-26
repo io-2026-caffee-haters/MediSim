@@ -37,7 +37,7 @@ classDiagram
     %% Modele danych
     class Patient {
         +string id
-        +Sprite patientVisual
+        +string name
         -Disease disease
         +GetInterviewDialogue() List~string~
     }

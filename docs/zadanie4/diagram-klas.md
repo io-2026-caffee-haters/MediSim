@@ -3,7 +3,7 @@
 title: MediSim – Diagram klas
 ---
 classDiagram
-    %% Główni menedżerowie
+    %% Główny manager
     class GameManager {
         -int playerScore
         -float clinicalTime
@@ -14,6 +14,7 @@ classDiagram
         +StartNewGame() void
         +EvaluateDiagnosis(string diseaseName) void
         +PerformTest(MedicalTest test) void
+        +GetRemainingCooldown(MedicalTest test) float
         +AddTime(float amount) void
         +AddScore(int amount) void
         -EndGame() void
@@ -38,11 +39,13 @@ classDiagram
         -GameObject gameHUDPanel
         -GameObject journalPanel
         -GameObject testPanel
+        -List~TestButton~ testButtons
         +ShowMainMenu() void
         +UpdateHUD(float time, int score) void
         +ToggleJournal() void
         +ShowDialogue(string text) void
         +ShowTestResult(string message) void
+        +UpdateTestButtons() void
     }
 
     %% Modele danych
@@ -96,9 +99,9 @@ classDiagram
 
     %% Relacje
     GameManager --> DatabaseManager : pobiera dane / zapisuje stan
-    GameManager --> UIManager : steruje widokami
+    GameManager --> UIManager : steruje widokami, dostarcza dane cooldownów
     GameManager o-- Patient : zarządza bieżącym pacjentem
-    GameManager --> MedicalTest : używa
+    GameManager --> MedicalTest : używa (wywołuje Execute)
     GameManager *-- Journal : posiada
 
     DatabaseManager ..> SaveData : serializuje/deserializuje JSON
@@ -110,6 +113,7 @@ classDiagram
     Disease o-- Symptom : posiada zestaw (przez symptomIds)
     MedicalTest ..> Symptom : może wykryć (wykrywanyPrzezBadania)
 
+    UIManager --> GameManager : odczytuje cooldowny przez GetRemainingCooldown
     UIManager --> Patient : wyświetla informacje
     UIManager --> Journal : otwiera / aktualizuje
 ```

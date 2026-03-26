@@ -52,10 +52,6 @@ classDiagram
     }
 
     class MenuManager {
-        -Button loadGameButton
-        -GameManager gameManagerRef
-        -DatabaseManager dbManagerRef
-        -UIManager uiManagerRef
         +void Awake()
         +void OnNewGameClicked()
         +void OnFreePlayClicked()

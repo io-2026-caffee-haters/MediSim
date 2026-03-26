@@ -48,7 +48,7 @@ classDiagram
     }
     class Symptom {
         +string id
-        +string description
+        +string name
         +string interviewLine
     }
     %% Rozgrywka i przechowywanie danych

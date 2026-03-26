@@ -1,6 +1,6 @@
 ```mermaid
 ---
-title: MediSim – Diagram klas (uproszczony, bez automatycznego śledzenia symptomów)
+title: MediSim – Diagram klas
 ---
 classDiagram
     %% Główni menedżerowie

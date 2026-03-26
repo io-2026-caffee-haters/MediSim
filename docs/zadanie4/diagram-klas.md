@@ -1,92 +1,115 @@
 ```mermaid
 ---
-title: MediSim
+title: MediSim – Diagram klas (uproszczony, bez automatycznego śledzenia symptomów)
 ---
 classDiagram
-    %% Główne menedżery
+    %% Główni menedżerowie
     class GameManager {
         -int playerScore
         -float clinicalTime
+        -bool isGameActive
         -Patient currentPatient
-        +bool isGameActive
+        -List~MedicalTest~ availableTests
+        -Dictionary~MedicalTest, float~ testCooldowns
         +StartNewGame() void
-        +EvaluateDiagnosis(Disease diagnosis) bool
-        +QuitGame() void
+        +EvaluateDiagnosis(string diseaseName) void
+        +PerformTest(MedicalTest test) void
+        +AddTime(float amount) void
+        +AddScore(int amount) void
         -EndGame() void
     }
+
     class DatabaseManager {
         -string savePath
         -List~Disease~ diseasePool
-        -List~Patient~ patientPool
+        -List~Symptom~ symptomPool
+        -List~MedicalTest~ testPool
         +LoadDataFromJSON() void
         +SaveGameState(SaveData data) void
         +LoadGameState() SaveData
         +DoesSaveExist() bool
-        +GetRandomPatient(string id, Sprite visual) Patient
         +GetRandomDisease() Disease
+        +GetSymptomById(int id) Symptom
+        +GetTestById(int id) MedicalTest
     }
+
     class UIManager {
         -GameObject mainMenuPanel
         -GameObject gameHUDPanel
         -GameObject journalPanel
+        -GameObject testPanel
         +ShowMainMenu() void
         +UpdateHUD(float time, int score) void
         +ToggleJournal() void
         +ShowDialogue(string text) void
+        +ShowTestResult(string message) void
     }
+
     %% Modele danych
     class Patient {
-        +string id
         +string name
-        -Disease disease
-        +GetInterviewDialogue() List~string~
+        -Disease actualDisease
+        +void Initialize(Disease disease)
+        +string GetInterviewText()
+        +List~Symptom~ GetSymptomsDetectableByTest(MedicalTest test)
     }
+
     class Disease {
-        +string id
-        +string name
-        +List~string~ symptoms
+        +int id
+        +string nazwa
+        +List~int~ symptomIds
+        +List~Symptom~ GetSymptoms(DatabaseManager db)
     }
+
     class Symptom {
-        +string id
-        +string name
+        +int id
+        +string nazwa
+        +string opis
+        +List~int~ wykrywanyPrzezBadania
         +string interviewLine
+        +bool widocznyNaWygladzie
     }
-    %% Rozgrywka i przechowywanie danych
-    class Journal {
-        -List~Disease~ allDiseases
-        -string userNotes
-        +UpdateNote(string text) void
-    }
+
     class MedicalTest {
-        +string id
+        +int id
+        +string nazwa
         +float timeCost
         +float cooldown
-        +Execute(Patient p) Symptom
+        +string Execute(Patient patient, DatabaseManager db)
     }
+
+    class Journal {
+        -List~Disease~ allDiseases
+        -List~Symptom~ allSymptoms
+        -string userNotes
+        +void UpdateNote(string text)
+        +void RefreshFromDatabase(DatabaseManager db)
+    }
+
     class SaveData {
         +int savedScore
         +float savedTime
-        +string patientID
-        +string diseaseID
+        +string currentPatientDiseaseId
         +string playerNotes
-        +List~float~ testCooldowns
+        +Dictionary~int, float~ testCooldowns
     }
+
     %% Relacje
-    GameManager --> DatabaseManager : Prosi o dane/zapis
-    GameManager --> UIManager : Zmienia stany widoku
-    UIManager --> GameManager : Wywołuje akcje przycisków
-    GameManager o-- Patient : Zarządza aktywnym
-    GameManager --> MedicalTest : Uruchamia
-    GameManager *-- Journal : Posiada
-    DatabaseManager ..> SaveData : Serializuje JSON
-    DatabaseManager ..> Journal : Wypełnia danymi na starcie
-    DatabaseManager ..> Disease : Tworzy listę wszystkich
-    DatabaseManager ..> Patient : Tworzy listę wszystkich
-    DatabaseManager ..> Symptom : Tworzy listę wszystkich
-    DatabaseManager ..> MedicalTest : Tworzy listę wszystkich
-    Patient --> Disease : Cierpi na
-    Patient *-- Symptom : Posiada zestaw
-    Disease o-- Symptom : Posiada zestaw
-    MedicalTest ..> Patient : Analizuje
-    MedicalTest ..> Symptom : Odkrywa
+    GameManager --> DatabaseManager : pobiera dane / zapisuje stan
+    GameManager --> UIManager : steruje widokami
+    GameManager o-- Patient : zarządza bieżącym pacjentem
+    GameManager --> MedicalTest : używa
+    GameManager *-- Journal : posiada
+
+    DatabaseManager ..> SaveData : serializuje/deserializuje JSON
+    DatabaseManager ..> Disease : ładuje z diseases.json
+    DatabaseManager ..> Symptom : ładuje z symptoms.json
+    DatabaseManager ..> MedicalTest : ładuje z tests.json
+
+    Patient --> Disease : cierpi na (jedna choroba)
+    Disease o-- Symptom : posiada zestaw (przez symptomIds)
+    MedicalTest ..> Symptom : może wykryć (wykrywanyPrzezBadania)
+
+    UIManager --> Patient : wyświetla informacje
+    UIManager --> Journal : otwiera / aktualizuje
 ```

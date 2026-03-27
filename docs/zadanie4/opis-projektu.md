@@ -26,7 +26,7 @@
 
 * `Symptom`: Każdy obiekt symptomu, niezależnie od tego, czy jest widoczny na zewnątrz (nakładka), czy ukryty (tylko wywiad), jest traktowany przez pacjenta w ten sam sposób podczas sprawdzania wykrywalności. Pozwala to na swobodne zastępowanie jednych objawów innymi w definicji choroby bez zmiany logiki ich przetwarzania.
 
-** W przyszłości system może zostać rozszerzony o dziedziczenie klas badań (np. XRayTest) **
+**W przyszłości system może zostać rozszerzony o dziedziczenie klas badań (np. XRayTest)**
   
 ## I - Interface Segregation Principle (Zasada segregacji interfejsów):
 
@@ -34,7 +34,7 @@
 
 * `DatabaseManager`: Klasa dostarcza specyficzne metody pobierania danych (np. GetDiseaseById, GetTestById) zamiast jednej ogólnej metody zwracającej surowy tekst. Pozwala to innym klasom, takim jak MenuManager czy GameManager, korzystać tylko z tych funkcjonalności bazy danych, których aktualnie potrzebują.
 
-** W przyszłości po powiększeniu systemu możliwe byłoby wydzielenie interfejsów (np. diagnostycznych i wizualnych), aby jeszcze lepiej spełnić zasadę ISP **
+**W przyszłości po powiększeniu systemu możliwe byłoby wydzielenie interfejsów (np. diagnostycznych i wizualnych), aby jeszcze lepiej spełnić zasadę ISP**
 
 ## D - Dependency Inversion Principle (Zasada odwrócenia zależności):
 

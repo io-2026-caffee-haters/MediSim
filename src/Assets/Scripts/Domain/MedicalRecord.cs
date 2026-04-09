@@ -1,36 +1,35 @@
+using System;
 using System.Collections.Generic;
 
 public class MedicalRecord
 {
-    private List<string> _performedTestNames;
+    private List<MedicalTestResult> _testHistory;
     private List<Symptom> _knownSymptoms;
 
     public MedicalRecord()
     {
-        // Inicjujemy puste listy, żeby uniknąć błędów NullReferenceException
-        _performedTestNames = new List<string>();
+        _testHistory = new List<MedicalTestResult>();
         _knownSymptoms = new List<Symptom>();
     }
 
     public void AddTestResult(MedicalTestResult result)
     {
-        // CELOWO PUSTE - Czekamy na fazę GREEN.
-        // Nic nie dodajemy do list.
-    }
-
-    public List<string> GetPerformedTestNames()
-    {
-        return _performedTestNames;
+        throw new NotImplementedException();
     }
 
     public List<Symptom> GetKnownSymptoms()
     {
-        return _knownSymptoms;
+        throw new NotImplementedException();
+    }
+
+    public List<MedicalTestResult> GetTestHistory()
+    {
+        throw new NotImplementedException();
     }
 
     public bool HasPerformedTest(string testName)
     {
-        // CELOWY BŁĄD LOGICZNY - wymusi to oblanie testów
-        return false;
+        throw new NotImplementedException();
     }
+
 }

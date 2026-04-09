@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using System.Linq; // Required for .Concat()
 
 public class PatientTests
 {
@@ -34,11 +35,9 @@ public class PatientTests
             new Symptom("sym_03", "Wysokie ciśnienie", false)
         };
 
-        Symptom visibleSymptom1 = new Symptom("sym_01", "Wysypka", true);
-        Symptom visibleSymptom2 = new Symptom("sym_02", "Kaszel", true);
-        Symptom hiddenSymptom   = new Symptom("sym_03", "Wysokie ciśnienie", false);
-
-        List<Symptom> allSymptoms = visibleSymptoms + hiddenSymptoms;
+        // Merging the two lists
+        List<Symptom> allSymptoms = visibleSymptoms.Concat(hiddenSymptoms).ToList();
+        
         Disease disease = new Disease("dis_01", "Choroba X", allSymptoms);
         Patient patient = new Patient(disease);
 

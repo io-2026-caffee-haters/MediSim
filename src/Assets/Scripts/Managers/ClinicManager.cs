@@ -1,9 +1,9 @@
 public class ClinicManager
 {
-    private PatientManager _patientManager;
+    private Patient _patientManager;
     private ScoreTimeManager _scoreTimeManager;
 
-    public ClinicManager(PatientManager patientManager, ScoreTimeManager scoreTimeManager)
+    public ClinicManager(Patient patientManager, ScoreTimeManager scoreTimeManager)
     {
         _patientManager = patientManager;
         _scoreTimeManager = scoreTimeManager;

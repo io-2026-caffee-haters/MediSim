@@ -1,0 +1,74 @@
+{
+  "medicaltests": [
+    {
+      "id": 0,
+      "name": "Wywiad lekarski",
+      "cooldown": 0.0,
+      "detectableSymptomIds": [4,5,7,8,10,11,12,14,15,18,21,22,23,25,26,32,33,34,35,36,38],
+      "timeCost": 0
+    },
+    {
+      "id": 1,
+      "name": "Termometr",
+      "cooldown": 7.0,
+      "detectableSymptomIds": [1],
+      "timeCost": 5
+    },
+    {
+      "id": 2,
+      "name": "Osłuchiwanie",
+      "cooldown": 8.0,
+      "detectableSymptomIds": [2,13,14],
+      "timeCost": 3
+    },
+    {
+      "id": 3,
+      "name": "Wymaz z gardła",
+      "cooldown": 10.0,
+      "detectableSymptomIds": [8,19],
+      "timeCost": 8
+    },
+    {
+      "id": 4,
+      "name": "Badanie krwi",
+      "cooldown": 15.0,
+      "detectableSymptomIds": [1,10,11,19,20,26,27,41],
+      "timeCost": 12
+    },
+    {
+      "id": 5,
+      "name": "RTG klatki piersiowej",
+      "cooldown": 20.0,
+      "detectableSymptomIds": [2,13,14,30],
+      "timeCost": 15
+    },
+    {
+      "id": 6,
+      "name": "USG jamy brzusznej",
+      "cooldown": 25.0,
+      "detectableSymptomIds": [6,7,15,20,41],
+      "timeCost": 18
+    },
+    {
+      "id": 7,
+      "name": "Test na COVID-19",
+      "cooldown": 30.0,
+      "detectableSymptomIds": [1,2,13,25],
+      "timeCost": 20
+    },
+    {
+      "id": 8,
+      "name": "EKG",
+      "cooldown": 8.0,
+      "detectableSymptomIds": [14],
+      "timeCost": 7
+    },
+    {
+      "id": 9,
+      "name": "Badanie neurologiczne",
+      "cooldown": 12.0,
+      "detectableSymptomIds": [16,17,28,32,35,36,37,38,39],
+      "timeCost": 10
+    }
+  ]
+}

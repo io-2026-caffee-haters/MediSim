@@ -38,37 +38,23 @@ public class Patient : MonoBehaviour
     public void StartInterview()
     {
 
-        if (databaseManager == null) databaseManager = Object.FindFirstObjectByType<DatabaseManager>();
+        /// Znajduje MedicalTestManager na scenie
+        MedicalTestManager testManager = Object.FindFirstObjectByType<MedicalTestManager>();
 
-        /// Pobieranie definicji wywadu z bazy danych.
-        MedicalTest interviewTest = databaseManager.medicaltestsList.Find(t => t.id == 0);
-        if (interviewTest == null)
+        if (testManager != null) 
         {
-            Debug.LogError("Nie znaleziono badania 'Wywiad lekarski' w bazie danych");
-            return;
+
+            /// Wykonuje badanie o ID = 0 (wywiad)
+            testManager.ExecuteTest(0, this);
+
         }
+        else 
+        {
 
+            Debug.LogError("Patient: Nie znaleziono MedicalTestManager na scenie");
 
-        Debug.Log("<color=yellow>WYWIAD LEKARSKI</color>");
+        }
         
-        bool foundAny = false;
-        foreach (var symptom in allPatientSymptoms)
-        {
-            
-            /// Sprawdza czy dany symptom jest na liście wykrywalnych dla wywiadu.
-            if (interviewTest.detectableSymptomIds.Contains(symptom.id))
-            {
-                Debug.Log($"Pacjent: Mam objaw - {symptom.name}");
-                foundAny = true;
-            }
-
-        }
-
-        if (!foundAny)
-        {
-            Debug.Log("Pacjent nie zgłasza żadnych objawów w wywiadzie.");
-        }
-
     }
 
     /// Metoda wypisująca wszystkie symptomy pacjenta.

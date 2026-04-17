@@ -6,7 +6,7 @@ using UnityEngine;
 public class MedicalTestManager : MonoBehaviour
 {
 
-    /// Referencja do managera bazy danych (możliwość korzystania z wczytanych plików JSON).
+    /// Referencja do managera bazy danych.
     public DatabaseManager databaseManager;
 
 

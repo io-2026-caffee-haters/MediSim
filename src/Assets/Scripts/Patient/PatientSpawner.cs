@@ -29,7 +29,7 @@ public class PatientSpawner : MonoBehaviour
         /// Sprawdza czy baza danych została poprawnie załadowana.
         if (databaseManager.diseasesList == null || databaseManager.diseasesList.Count == 0)
         {
-            Debug.LogError("Baza chorób jest pusta!");
+            Debug.LogError("PatientSpawner: Baza chorób jest pusta!");
             return;
         }
 
@@ -60,7 +60,7 @@ public class PatientSpawner : MonoBehaviour
         
         if (patientScript != null)
         {
-            patientScript.Initialize(randomDisease, patientSymptoms); //
+            patientScript.Initialize(randomDisease, patientSymptoms);
         }
         else 
         {

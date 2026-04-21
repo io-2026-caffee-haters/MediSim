@@ -6,6 +6,8 @@ public class Symptom
 
     public Symptom(string id, string name, bool isVisibleToNakedEye)
     {
-  
+        Id = id;
+        Name = name;
+        IsVisibleToNakedEye = isVisibleToNakedEye;
     }
 }

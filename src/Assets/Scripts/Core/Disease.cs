@@ -8,6 +8,8 @@ public class Disease
 
     public Disease(string id, string name, List<Symptom> symptoms)
     {
-        
+        Id = id;
+        Name = name;
+        Symptoms = symptoms ?? new List<Symptom>();
     }
 }

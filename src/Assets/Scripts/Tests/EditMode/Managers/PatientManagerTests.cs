@@ -23,14 +23,14 @@ public class PatientManagerTests
     {
         // Arrange
         var manager = new PatientManager();
-        Assert.IsNull(manager.currentPatient, "Na początku manager nie powinien mieć pacjenta.");
+        Assert.IsNull(manager.CurrentPatient, "Na początku manager nie powinien mieć pacjenta.");
 
         // Act
         manager.SpawnNewPatient();
 
         // Assert
         // W fazie RED to rzuci NotImplementedException
-        Assert.IsNotNull(manager.currentPatient, "Po spawnowaniu currentPatient nie powinien być nullem.");
+        Assert.IsNotNull(manager.CurrentPatient, "Po spawnowaniu CurrentPatient nie powinien być nullem.");
     }
 
     [Test]
@@ -38,13 +38,13 @@ public class PatientManagerTests
     {
         // Arrange
         var manager = new PatientManager();
-        manager.playerNotes = "Stare notatki o poprzednim pacjencie.";
+        manager.PlayerNotes = "Stare notatki o poprzednim pacjencie.";
 
         // Act
         manager.SpawnNewPatient();
 
         // Assert
-        Assert.AreEqual(string.Empty, manager.playerNotes, "Notatki powinny zostać zresetowane przy nowym pacjencie.");
+        Assert.AreEqual(string.Empty, manager.PlayerNotes, "Notatki powinny zostać zresetowane przy nowym pacjencie.");
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class PatientManagerTests
         manager.SpawnNewPatient(); 
         
         // Pobieramy chorobę, którą manager przypisał pacjentowi wewnątrz SpawnNewPatient
-        var actualDisease = manager.currentPatient.ActualDisease;
+        var actualDisease = manager.CurrentPatient.ActualDisease;
 
         // Act
         bool result = manager.EvaluateDiagnosis(actualDisease);
@@ -92,6 +92,6 @@ public class PatientManagerTests
         var patientFromMethod = manager.GetCurrentPatient();
 
         // Assert
-        Assert.AreSame(manager.currentPatient, patientFromMethod, "Metoda GetCurrentPatient powinna zwracać tę samą referencję co właściwość.");
+        Assert.AreSame(manager.CurrentPatient, patientFromMethod, "Metoda GetCurrentPatient powinna zwracać tę samą referencję co właściwość.");
     }
 }

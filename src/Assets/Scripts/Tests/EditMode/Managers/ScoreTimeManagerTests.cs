@@ -15,8 +15,8 @@ public class ScoreTimeManagerTests
     public void Constructor_SetsInitialValuesCorrectly()
     {
         // Act & Assert
-        Assert.AreEqual(100f, _scoreTimeManager.remainingTime);
-        Assert.AreEqual(0, _scoreTimeManager.currentScore);
+        Assert.AreEqual(100f, _scoreTimeManager.RemainingTime);
+        Assert.AreEqual(0, _scoreTimeManager.CurrentScore);
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class ScoreTimeManagerTests
         _scoreTimeManager.RemoveTime(15.5f);
 
         // Assert
-        Assert.AreEqual(84.5f, _scoreTimeManager.remainingTime);
+        Assert.AreEqual(84.5f, _scoreTimeManager.RemainingTime);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class ScoreTimeManagerTests
         _scoreTimeManager.RemoveTime(150f); // More than the starting 100f
 
         // Assert
-        Assert.AreEqual(0f, _scoreTimeManager.remainingTime);
+        Assert.AreEqual(0f, _scoreTimeManager.RemainingTime);
     }
 
     [Test]
@@ -47,7 +47,7 @@ public class ScoreTimeManagerTests
         _scoreTimeManager.AddScore(25);
 
         // Assert
-        Assert.AreEqual(75, _scoreTimeManager.currentScore);
+        Assert.AreEqual(75, _scoreTimeManager.CurrentScore);
     }
     
     [Test]

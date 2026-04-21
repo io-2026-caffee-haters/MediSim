@@ -7,19 +7,24 @@ public class MedicalTestTests
 {
     private Patient _patient;
 
+    private Symptom _symptomFever;
+    private Symptom _symptomCough;
+    private Symptom _symptomVirus;
+    private Symptom _symptomBacteria;
+
     [SetUp]
     public void SetUp()
     {
         // Przygotowanie danych testowych (zakładamy, że te klasy już działają i mają konstruktory)
-        var symptomFever = new Symptom("S_FEVER", "Gorączka", false);
-        var symptomCough = new Symptom("S_COUGH", "Kaszel", true);
-        var symptomVirus = new Symptom("S_VIRUS", "Wirus we krwi", false);
+        _symptomFever = new Symptom("S_FEVER", "Gorączka", false);
+        _symptomCough = new Symptom("S_COUGH", "Kaszel", true);
+        _symptomVirus = new Symptom("S_VIRUS", "Wirus we krwi", false);
+        _symptomBacteria = new Symptom("S_BACTERIA", "Bakteria", false);
 
-        List<Symptom> symptoms = new List<Symptom> { symptomFever, symptomCough, symptomVirus };
-
+        List<Symptom> symptoms = new List<Symptom> { _symptomFever, _symptomCough, _symptomVirus };
         var disease = new Disease("D_FLU", "Grypa", symptoms);
 
-        var _patient = new Patient(disease); 
+        _patient = new Patient(disease); 
     }
 
     [Test]
@@ -27,7 +32,7 @@ public class MedicalTestTests
     {
         // Arrange
         string expectedName = "Badanie Krwi";
-        MedicalTest test = new MedicalTest(expectedName, 15f, new List<string>());
+        MedicalTest test = new MedicalTest(expectedName, 15f, new List<Symptom>());
 
         // Act
         MedicalTestResult result = test.PerformOn(_patient);
@@ -41,23 +46,22 @@ public class MedicalTestTests
     public void PerformOn_ShouldDetectOnlyHiddenSymptomsThatAreInDetectableList()
     {
         // Arrange
-        MedicalTest test = new MedicalTest("Test Kompleksowy", 30f, new List<string> { "S_FEVER", "S_VIRUS", "S_UNKNOWN" });
+        MedicalTest test = new MedicalTest("Test Kompleksowy", 30f, new List<Symptom> { _symptomFever, _symptomCough, _symptomBacteria});
 
         // Act
         MedicalTestResult result = test.PerformOn(_patient);
 
         // Assert
         Assert.IsNotNull(result.DetectedSymptoms);
-        Assert.AreEqual(2, result.DetectedSymptoms.Count, "Powinno wykryć dokładnie 2 ukryte objawy.");
-        Assert.IsTrue(result.DetectedSymptoms.Any(s => s.Id == "S_FEVER"));
-        Assert.IsTrue(result.DetectedSymptoms.Any(s => s.Id == "S_VIRUS"));
+        Assert.AreEqual(1, result.DetectedSymptoms.Count, "Powinno wykryć dokładnie 1 ukryte objawy.");
+        Assert.IsTrue(result.DetectedSymptoms.Any(s => s.Id == _symptomFever.Id));
     }
 
     [Test]
     public void PerformOn_ShouldNotDetectVisibleSymptoms()
     {
         // Arrange
-        MedicalTest test = new MedicalTest("Test na kaszel", 10f, new List<string> { "S_COUGH" });
+        MedicalTest test = new MedicalTest("Test na kaszel", 10f, new List<Symptom> { _symptomCough });
 
         // Act
         MedicalTestResult result = test.PerformOn(_patient);
@@ -70,7 +74,7 @@ public class MedicalTestTests
     public void PerformOn_ShouldReturnEmptyList_WhenPatientHasNoMatchingHiddenSymptoms()
     {
         // Arrange
-        MedicalTest test = new MedicalTest("Test na bakterie", 20f, new List<string> { "S_BACTERIA", "S_PARASITE" });
+        MedicalTest test = new MedicalTest("Test na bakterie", 20f, new List<Symptom> { _symptomBacteria});
 
         // Act
         MedicalTestResult result = test.PerformOn(_patient);

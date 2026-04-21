@@ -36,20 +36,20 @@ public class GameLoopManagerTests
 
         // Assert: Sprawdzamy BEHAWIORALNIE (czy GameLoop zarządził odpowiednimi elementami)
         Assert.IsTrue(_spyDataRepository.WasLoadStaticDataCalled, "GameLoop powinien wymusić załadowanie bazy danych na starcie.");
-        Assert.IsNotNull(_patientManager.currentPatient, "GameLoop powinien nakazać spawnowanie pierwszego pacjenta.");
+        Assert.IsNotNull(_patientManager.CurrentPatient, "GameLoop powinien nakazać spawnowanie pierwszego pacjenta.");
     }
 
     [Test]
     public void StopAndSaveSession_ShouldPassCorrectDataToSaveSystem()
     {
         // Arrange
+        // Zmuszamy menedżera pacjentów do posiadania konkretnego pacjenta
+        _patientManager.SpawnNewPatient();
+        
         // Symulujemy stan gry w trakcie sesji
         _scoreTimeManager.AddScore(500);
         _scoreTimeManager.RemoveTime(25f);
-        _patientManager.playerNotes = "Moje cenne notatki z wywiadu.";
-        
-        // Zmuszamy menedżera pacjentów do posiadania konkretnego pacjenta
-        _patientManager.SpawnNewPatient();
+        _patientManager.PlayerNotes = "Moje cenne notatki z wywiadu.";
 
         // Act
         _gameLoop.StopAndSaveSession();
@@ -69,14 +69,14 @@ public class GameLoopManagerTests
     {
         // Arrange
         _spySaveSystem.SetHasSaveFile(false);
-        var initialScore = _scoreTimeManager.currentScore;
+        var initialScore = _scoreTimeManager.CurrentScore;
 
         // Act
         _gameLoop.ResumeSession();
 
         // Assert
         Assert.IsFalse(_spySaveSystem.WasLoadCalled, "GameLoop nie powinien próbować wczytywać gry, jeśli plik nie istnieje.");
-        Assert.AreEqual(initialScore, _scoreTimeManager.currentScore, "Stan gry nie powinien się zmienić.");
+        Assert.AreEqual(initialScore, _scoreTimeManager.CurrentScore, "Stan gry nie powinien się zmienić.");
     }
 
     [Test]
@@ -96,9 +96,9 @@ public class GameLoopManagerTests
 
         // Assert
         Assert.IsTrue(_spySaveSystem.WasLoadCalled, "GameLoop powinien wywołać wczytywanie.");
-        Assert.AreEqual(1234, _scoreTimeManager.currentScore, "Punkty powinny zostać przywrócone.");
-        Assert.AreEqual(45f, _scoreTimeManager.remainingTime, "Czas powinien zostać przywrócony.");
-        Assert.AreEqual("Odzyskane notatki", _patientManager.playerNotes, "Notatki powinny zostać przywrócone.");
+        Assert.AreEqual(1234, _scoreTimeManager.CurrentScore, "Punkty powinny zostać przywrócone.");
+        Assert.AreEqual(45f, _scoreTimeManager.RemainingTime, "Czas powinien zostać przywrócony.");
+        Assert.AreEqual("Odzyskane notatki", _patientManager.PlayerNotes, "Notatki powinny zostać przywrócone.");
     }
 
     // ==========================================

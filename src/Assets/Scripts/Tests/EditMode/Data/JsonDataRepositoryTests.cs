@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Reflection;
 
 [TestFixture]
 public class JsonDataRepositoryTests
@@ -71,11 +72,7 @@ public class JsonDataRepositoryTests
         // Assert
         Assert.IsNotNull(bloodTest, "Repozytorium powinno zwrócić test, jeśli istnieje w JSONie.");
         Assert.AreEqual("Badanie Krwi", bloodTest.Name);
-        
-        // Aby upewnić się, że test medyczny wczytał swój czas i parametry, 
-        // rzutujemy go na konkretną klasę i pobieramy jego dane
-        var concreteTest = (MedicalTest)bloodTest;
-        Assert.IsNotNull(concreteTest, "Test powinien być instancją klasy MedicalTest.");
+        Assert.AreEqual(15.0f, bloodTest.Duration, "Czas trwania testu powinien być poprawny.");
     }
 
     [Test]

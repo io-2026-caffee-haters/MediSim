@@ -45,7 +45,7 @@ public class Patient : MonoBehaviour
         {
 
             /// Wykonuje badanie o ID = 0 (wywiad)
-            testManager.ExecuteTest(0, this);
+            testManager.ExecuteTest(0);
 
         }
         else 

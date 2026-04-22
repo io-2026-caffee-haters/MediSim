@@ -19,10 +19,10 @@ public class MedicalTestResult
 
         /// Jeśli nie wykryto żadnych objawów
         if (detectedSymptoms.Count == 0) 
-            return $"{testName}: Nie wykryto żadnych objawów.";
+            return $"Nie wykryto żadnych objawów.";
 
         /// Konstrukcja listy wykrytych objawów w formie punktów
-        string summary = $"{testName} wykrył objawy:\n";
+        string summary = $"Wykryto objawy:\n";
         foreach (var i in detectedSymptoms)
         {
             summary += $"- {i.name}\n";

@@ -6,30 +6,53 @@ public class PatientManagerTests
 {
     private Disease _flu;
     private Disease _cold;
+    private IDataRepository _fakeRepository;
+
+    // 1. Zagnieżdżona klasa Fake (udaje bazę danych na potrzeby testów)
+    private class FakeDataRepository : IDataRepository
+    {
+        private readonly List<Disease> _testDiseases;
+
+        // Przekazujemy listę chorób przez konstruktor Fake'a
+        public FakeDataRepository(List<Disease> testDiseases)
+        {
+            _testDiseases = testDiseases;
+        }
+
+        public void LoadStaticData() { }
+        public Disease GetDiseaseById(string id) => null;
+        public IMedicalTest GetTestById(string id) => null;
+        public IEnumerable<IMedicalTest> GetAllTests() => new List<IMedicalTest>();
+        
+        // Ta metoda zwraca teraz nasze choroby testowe!
+        public IEnumerable<Disease> GetAllDiseases() => _testDiseases;
+    }
 
     [SetUp]
     public void SetUp()
     {
-        // Przygotowanie danych testowych zgodnie z Twoim formatem konstruktorów
+        // Przygotowanie danych testowych
         Symptom fever = new Symptom("S_FEVER", "Gorączka", false);
         List<Symptom> fluSymptoms = new List<Symptom> { fever };
         
         _flu = new Disease("D_FLU", "Grypa", fluSymptoms);
         _cold = new Disease("D_COLD", "Przeziębienie", new List<Symptom>());
+
+        // 2. Inicjalizujemy Fake'a naszymi chorobami, żeby PatientManager miał co losować
+        _fakeRepository = new FakeDataRepository(new List<Disease> { _flu, _cold });
     }
 
     [Test]
     public void SpawnNewPatient_ShouldIncreaseCurrentPatientReference()
     {
-        // Arrange
-        var manager = new PatientManager();
+        // Arrange - wstrzykujemy repozytorium!
+        var manager = new PatientManager(_fakeRepository);
         Assert.IsNull(manager.CurrentPatient, "Na początku manager nie powinien mieć pacjenta.");
 
         // Act
         manager.SpawnNewPatient();
 
         // Assert
-        // W fazie RED to rzuci NotImplementedException
         Assert.IsNotNull(manager.CurrentPatient, "Po spawnowaniu CurrentPatient nie powinien być nullem.");
     }
 
@@ -37,7 +60,7 @@ public class PatientManagerTests
     public void SpawnNewPatient_ShouldClearPlayerNotes()
     {
         // Arrange
-        var manager = new PatientManager();
+        var manager = new PatientManager(_fakeRepository);
         manager.PlayerNotes = "Stare notatki o poprzednim pacjencie.";
 
         // Act
@@ -51,10 +74,9 @@ public class PatientManagerTests
     public void EvaluateDiagnosis_ShouldReturnTrue_WhenDiseaseMatches()
     {
         // Arrange
-        var manager = new PatientManager();
+        var manager = new PatientManager(_fakeRepository);
         manager.SpawnNewPatient(); 
         
-        // Pobieramy chorobę, którą manager przypisał pacjentowi wewnątrz SpawnNewPatient
         var actualDisease = manager.CurrentPatient.ActualDisease;
 
         // Act
@@ -68,10 +90,9 @@ public class PatientManagerTests
     public void EvaluateDiagnosis_ShouldReturnFalse_WhenDiseaseIsWrong()
     {
         // Arrange
-        var manager = new PatientManager();
+        var manager = new PatientManager(_fakeRepository);
         manager.SpawnNewPatient();
         
-        // Tworzymy chorobę, której pacjent na pewno nie ma
         var wrongDisease = new Disease("WRONG", "Inna Choroba", new List<Symptom>());
 
         // Act
@@ -85,11 +106,11 @@ public class PatientManagerTests
     public void GetCurrentPatient_ShouldReturnTheSameReferenceAsProperty()
     {
         // Arrange
-        var manager = new PatientManager();
+        var manager = new PatientManager(_fakeRepository);
         manager.SpawnNewPatient();
 
         // Act
-        var patientFromMethod = manager.GetCurrentPatient();
+        var patientFromMethod = manager.CurrentPatient;
 
         // Assert
         Assert.AreSame(manager.CurrentPatient, patientFromMethod, "Metoda GetCurrentPatient powinna zwracać tę samą referencję co właściwość.");

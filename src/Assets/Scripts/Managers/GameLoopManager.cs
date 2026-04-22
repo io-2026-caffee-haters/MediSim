@@ -6,6 +6,8 @@ public class GameLoopManager
     private readonly ScoreTimeManager _scoreTimeManager;
     private readonly IDataRepository _dataRepository;
     private readonly ISaveSystem _saveSystem;
+    private bool _isSessionActive = false;
+
 
     public GameLoopManager(
         PatientManager patientManager, 
@@ -26,6 +28,8 @@ public class GameLoopManager
         
         // 2. Wygenerowanie pierwszego pacjenta
         _patientManager.SpawnNewPatient();
+
+        _isSessionActive = true;
     }
 
     public void StopAndSaveSession()
@@ -35,7 +39,7 @@ public class GameLoopManager
         {
             currentScore = _scoreTimeManager.CurrentScore,
             remainingTime = _scoreTimeManager.RemainingTime,
-            userNotes = _patientManager.PlayerNotes,
+            patientNotes = _patientManager.PlayerNotes,
             
             // Zabezpieczamy się przed nullem przy użyciu operatora '?.' oraz '??'
             currentDiseaseId = _patientManager.CurrentPatient?.ActualDisease?.Id ?? "",
@@ -44,6 +48,7 @@ public class GameLoopManager
 
         // 2. Przekazujemy paczkę danych do systemu zapisu
         _saveSystem.SaveCurrentGame(dataToSave);
+        _isSessionActive = false;
     }
 
     public void ResumeSession()
@@ -58,7 +63,7 @@ public class GameLoopManager
         SaveData loadedData = _saveSystem.LoadSavedGame();
 
         // 2. Rozsyłamy dane do odpowiednich menedżerów
-        _patientManager.PlayerNotes = loadedData.userNotes;
+        _patientManager.PlayerNotes = loadedData.patientNotes;
         _scoreTimeManager.RestoreState(loadedData.remainingTime, loadedData.currentScore);
         
         /* * W przyszłości (gdy dodamy logikę ładowania konkretnego pacjenta), 
@@ -66,5 +71,33 @@ public class GameLoopManager
          * * Disease savedDisease = _dataRepository.GetDiseaseById(loadedData.currentDiseaseId);
          * _patientManager.LoadPatient(loadedData.currentPatientId, savedDisease);
          */
+        _isSessionActive = true;
+    }
+
+    /// Metoda wywoływana co klatkę przez GameBootstrapper.
+    /// </summary>
+    public void Tick(float deltaTime)
+    {
+        // 1. Zabezpieczenie: Czas ucieka TYLKO, gdy gra jest aktywna 
+        // (nie chcemy, by czas leciał np. gdy gracz jest w Main Menu)
+        if (!_isSessionActive) return;
+
+        // 2. Odejmujemy ułamek sekundy od głównego licznika
+        _scoreTimeManager.RemoveTime(deltaTime);
+
+        // 3. Sprawdzamy, czy czas właśnie się skończył
+        if (_scoreTimeManager.RemainingTime <= 0)
+        {
+            EndSessionDueToTimeOut();
+        }
+    }
+
+    private void EndSessionDueToTimeOut()
+    {
+        _isSessionActive = false;
+        
+        // Na ten moment dajemy prosty komunikat do konsoli.
+        // Docelowo możesz tu np. wyrzucić pacjenta z gabinetu albo wymusić otwarcie okna diagnozy!
+        UnityEngine.Debug.Log("<color=orange>Czas minął! Pacjent opuszcza gabinet.</color>");
     }
 }

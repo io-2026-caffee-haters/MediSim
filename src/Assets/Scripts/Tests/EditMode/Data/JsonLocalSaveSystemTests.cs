@@ -86,7 +86,7 @@ public class JsonLocalSaveSystemTests
             remainingTime = 45.5f,
             currentPatientId = "P_005",
             currentDiseaseId = "D_COVID",
-            userNotes = "Hello World!"
+            patientNotes = "Hello World!"
         };
         
         // Act
@@ -99,7 +99,7 @@ public class JsonLocalSaveSystemTests
         Assert.AreEqual(45.5f, loadedData.remainingTime);
         Assert.AreEqual("P_005", loadedData.currentPatientId);
         Assert.AreEqual("D_COVID", loadedData.currentDiseaseId);
-        Assert.AreEqual("Hello World!", loadedData.userNotes);
+        Assert.AreEqual("Hello World!", loadedData.patientNotes);
     }
 
     [Test]

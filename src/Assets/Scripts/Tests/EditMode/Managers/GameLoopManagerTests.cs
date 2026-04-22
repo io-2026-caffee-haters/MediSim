@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 
 [TestFixture]
 public class GameLoopManagerTests
@@ -12,17 +13,19 @@ public class GameLoopManagerTests
     [SetUp]
     public void SetUp()
     {
-        _patientManager = new PatientManager();
-        _scoreTimeManager = new ScoreTimeManager(100f, 0);
-        
-        // Używamy "Szpiegów" zamiast prawdziwych systemów plików
+        // 1. Najpierw inicjalizujemy nasze systemy testowe (Szpiegów)
         _spyDataRepository = new SpyDataRepository();
         _spySaveSystem = new SpySaveSystem();
 
+        // 2. WSTRZYKUJEMY bazę danych do Menedżera Pacjentów (Rozwiązanie błędu CS7036)
+        _patientManager = new PatientManager(_spyDataRepository);
+        _scoreTimeManager = new ScoreTimeManager(100f, 0);
+        
+        // 3. Inicjalizujemy GameLoopManager zgodnie z jego nowym podpisem
         _gameLoop = new GameLoopManager(
             _patientManager, 
-            _scoreTimeManager, 
-            _spyDataRepository, 
+            _scoreTimeManager,
+            _spyDataRepository,
             _spySaveSystem
         );
     }
@@ -31,10 +34,9 @@ public class GameLoopManagerTests
     public void StartNewSession_ShouldLoadStaticData_AndSpawnPatient()
     {
         // Act
-        // Wywołanie rzuci wyjątek w fazie RED
         _gameLoop.StartNewSession();
 
-        // Assert: Sprawdzamy BEHAWIORALNIE (czy GameLoop zarządził odpowiednimi elementami)
+        // Assert
         Assert.IsTrue(_spyDataRepository.WasLoadStaticDataCalled, "GameLoop powinien wymusić załadowanie bazy danych na starcie.");
         Assert.IsNotNull(_patientManager.CurrentPatient, "GameLoop powinien nakazać spawnowanie pierwszego pacjenta.");
     }
@@ -43,7 +45,6 @@ public class GameLoopManagerTests
     public void StopAndSaveSession_ShouldPassCorrectDataToSaveSystem()
     {
         // Arrange
-        // Zmuszamy menedżera pacjentów do posiadania konkretnego pacjenta
         _patientManager.SpawnNewPatient();
         
         // Symulujemy stan gry w trakcie sesji
@@ -61,7 +62,8 @@ public class GameLoopManagerTests
         Assert.IsNotNull(capturedData, "GameLoop powinien przekazać obiekt SaveData do systemu zapisu.");
         Assert.AreEqual(500, capturedData.currentScore, "Punkty nie zgadzają się z tymi w ScoreTimeManager.");
         Assert.AreEqual(75f, capturedData.remainingTime, "Czas nie zgadza się z tym w ScoreTimeManager.");
-        Assert.AreEqual("Moje cenne notatki z wywiadu.", capturedData.userNotes, "Notatki nie zostały przekazane do zapisu.");
+        // Zmieniono userNotes na patientNotes zgodnie ze strukturą SaveData
+        Assert.AreEqual("Moje cenne notatki z wywiadu.", capturedData.patientNotes, "Notatki nie zostały przekazane do zapisu."); 
     }
 
     [Test]
@@ -87,7 +89,7 @@ public class GameLoopManagerTests
         { 
             currentScore = 1234, 
             remainingTime = 45f,
-            userNotes = "Odzyskane notatki" 
+            patientNotes = "Odzyskane notatki" // Zmieniono z userNotes
         };
         _spySaveSystem.SetSaveDataToReturn(simulatedSave);
 
@@ -116,6 +118,20 @@ public class GameLoopManagerTests
 
         public Disease GetDiseaseById(string id) { return null; }
         public IMedicalTest GetTestById(string id) { return null; }
+
+        public IEnumerable<IMedicalTest> GetAllTests()
+        {
+            return new List<IMedicalTest>();
+        }
+
+        public IEnumerable<Disease> GetAllDiseases()
+        {
+            // Musimy zwrócić cokolwiek, by metoda SpawnNewPatient nie wywaliła wyjątku o pustej bazie!
+            return new List<Disease> 
+            { 
+                new Disease("D_DUMMY", "Dummy Disease", new List<Symptom>()) 
+            };
+        }
     }
 
     private class SpySaveSystem : ISaveSystem

@@ -8,5 +8,5 @@ public class SaveData
     public float remainingTime;
     public string currentPatientId;
     public string currentDiseaseId;
-    public string userNotes;
+    public string patientNotes;
 }

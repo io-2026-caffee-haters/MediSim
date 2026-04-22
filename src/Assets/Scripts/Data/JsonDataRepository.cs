@@ -112,6 +112,16 @@ public class JsonDataRepository : IDataRepository
         return _tests.TryGetValue(id, out IMedicalTest test) ? test : null;
     }
 
+    // IEnumerable zwraca wszystkie testy bez możliwości ich edycji
+    public IEnumerable<IMedicalTest> GetAllTests()
+    {
+        return _tests.Values;
+    }
+
+    public IEnumerable<Disease> GetAllDiseases()
+    {
+        return _diseases.Values;
+    }
 
 
 

@@ -14,7 +14,7 @@ public class SaveDataTests
             remainingTime = 120.5f,
             currentPatientId = "P_002",
             currentDiseaseId = "D_COVID",
-            userNotes = "Pacjent skarży się na ból głowy."
+            patientNotes = "Pacjent skarży się na ból głowy."
         };
 
         // Act
@@ -27,7 +27,7 @@ public class SaveDataTests
         Assert.AreEqual(original.remainingTime, deserialized.remainingTime);
         Assert.AreEqual(original.currentPatientId, deserialized.currentPatientId);
         Assert.AreEqual(original.currentDiseaseId, deserialized.currentDiseaseId);
-        Assert.AreEqual(original.userNotes, deserialized.userNotes);
+        Assert.AreEqual(original.patientNotes, deserialized.patientNotes);
     }
     
     [Test]
@@ -36,7 +36,7 @@ public class SaveDataTests
         // Arrange: Czasem gracz nie zrobi notatek, sprawdzamy przypadek brzegowy (null/pusty string)
         var original = new SaveData
         {
-            userNotes = ""
+            patientNotes = ""
         };
 
         // Act
@@ -44,6 +44,6 @@ public class SaveDataTests
         var deserialized = JsonUtility.FromJson<SaveData>(json);
 
         // Assert
-        Assert.AreEqual("", deserialized.userNotes);
+        Assert.AreEqual("", deserialized.patientNotes);
     }
 }

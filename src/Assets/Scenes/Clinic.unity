@@ -2948,10 +2948,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be2d571dbc704046aeca1c6833a3d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MediSim.Runtime::MedicalTestView
-  interviewResultPanel: {fileID: 0}
-  mdtResultPanel: {fileID: 0}
-  medicalTestTitle: {fileID: 0}
-  medicalTestResult: {fileID: 0}
+  interviewResult: {fileID: 1863259336}
+  medicalTestPanel: {fileID: 1569903192}
+  medicalTestTitle: {fileID: 1032923645}
+  medicalTestResult: {fileID: 444566705}
   closeButton: {fileID: 426684361}
 --- !u!1 &1858123258
 GameObject:

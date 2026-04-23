@@ -2,6 +2,9 @@ using System;
 
 public class GameLoopManager
 {
+    public event Action OnSessionStarted;
+    public event Action OnSessionEnded;
+
     private readonly PatientManager _patientManager;
     private readonly ScoreTimeManager _scoreTimeManager;
     private readonly IDataRepository _dataRepository;
@@ -30,6 +33,22 @@ public class GameLoopManager
         _patientManager.SpawnNewPatient();
 
         _isSessionActive = true;
+        OnSessionStarted?.Invoke();
+    }
+
+    public void ResumeSession()
+    {
+        // Jeśli plik nie istnieje, przerywamy wczytywanie
+        if (!_saveSystem.HasSaveFile()) return;
+
+        // 1. Przywracamy czas i punkty
+        _scoreTimeManager.RestoreState(loadedData.remainingTime, loadedData.currentScore);
+        
+        // 2. Przywracamy pacjenta i jego notatki (ta metoda wywoła event OnPatientSpawned dla UI!)
+        _patientManager.RestorePatientState(loadedData.currentDiseaseId, loadedData.patientNotes);
+
+        _isSessionActive = true;
+        OnSessionStarted?.Invoke();
     }
 
     public void StopAndSaveSession()
@@ -49,33 +68,10 @@ public class GameLoopManager
         // 2. Przekazujemy paczkę danych do systemu zapisu
         _saveSystem.SaveCurrentGame(dataToSave);
         _isSessionActive = false;
+        OnSessionEnded?.Invoke();
     }
 
-    public void ResumeSession()
-    {
-        // Jeśli plik nie istnieje, przerywamy wczytywanie (zgodnie z testem)
-        if (!_saveSystem.HasSaveFile())
-        {
-            return;
-        }
-
-        // 1. Pobieramy dane z dysku
-        SaveData loadedData = _saveSystem.LoadSavedGame();
-
-        // 2. Rozsyłamy dane do odpowiednich menedżerów
-        _patientManager.PlayerNotes = loadedData.patientNotes;
-        _scoreTimeManager.RestoreState(loadedData.remainingTime, loadedData.currentScore);
-        
-        /* * W przyszłości (gdy dodamy logikę ładowania konkretnego pacjenta), 
-         * będziemy musieli tu zrobić coś w stylu:
-         * * Disease savedDisease = _dataRepository.GetDiseaseById(loadedData.currentDiseaseId);
-         * _patientManager.LoadPatient(loadedData.currentPatientId, savedDisease);
-         */
-        _isSessionActive = true;
-    }
-
-    /// Metoda wywoływana co klatkę przez GameBootstrapper.
-    /// </summary>
+    // Metoda wywoływana co klatkę przez GameBootstrapper.
     public void Tick(float deltaTime)
     {
         // 1. Zabezpieczenie: Czas ucieka TYLKO, gdy gra jest aktywna 

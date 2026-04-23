@@ -56,12 +56,33 @@ public class GameBootstrapper : MonoBehaviour
         // ==========================================
         // ETAP 4: PODPINANIE ZDARZEŃ (EVENTS)
         // ==========================================
+        
         // Gdy logika wygeneruje pacjenta, UI automatycznie wyświetli jego dane
-        patientManager.OnPatientSpawned += _patientView.DisplayNewPatient;
+        patientManager.OnPatientSpawned += (patient) => 
+        {
+            // 1. Zaktualizuj dane na ekranie
+            _patientView.DisplayNewPatient(patient);
+            // 2. Przełącz ekran na gabinet!
+            _uiManager.ShowScreen(_patientView);
+            // 3. Pokaż HUD z czasem i punktami!
+            _uiManager.ShowHUD(_scoreTimeView);
+        };
+        _gameLoopManager.OnSessionStarted += () => 
+        {
+            _uiManager.ShowScreen(_patientView);
+            _uiManager.ShowHUD(_scoreTimeView);
+        };
+
+        _gameLoopManager.OnSessionEnded += () => 
+        {
+            _uiManager.ShowScreen(_mainMenuView);
+            _uiManager.HideHUD();
+        };
 
         // ==========================================
         // ETAP 5: URUCHOMIENIE GRY
         // ==========================================
+
         // Na sam start otwieramy Menu Główne
         _uiManager.ShowScreen(_mainMenuView);
     }

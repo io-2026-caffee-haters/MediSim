@@ -42,6 +42,15 @@ public class UIManager
         _currentHUD.Show();
     }
 
+    public void HideHUD()
+    {
+        if (_currentHUD != null)
+        {
+            _currentHUD.Hide();
+            _currentHUD = null; // Czyścimy referencję, ponieważ HUD zostaje ukryty
+        }
+    }
+
     // ==========================================
     // ZARZĄDZANIE POPUPAMI
     // ==========================================

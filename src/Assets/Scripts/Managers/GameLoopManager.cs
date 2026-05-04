@@ -41,6 +41,9 @@ public class GameLoopManager
         // Jeśli plik nie istnieje, przerywamy wczytywanie
         if (!_saveSystem.HasSaveFile()) return;
 
+        // POBRANIE DANYCH Z PLIKU
+        SaveData loadedData = _saveSystem.LoadSavedGame();
+
         // 1. Przywracamy czas i punkty
         _scoreTimeManager.RestoreState(loadedData.remainingTime, loadedData.currentScore);
         

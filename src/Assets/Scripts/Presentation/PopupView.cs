@@ -2,14 +2,10 @@ using UnityEngine;
 
 public abstract class PopupView : BaseView
 {
-    [Header("Ustawienia Popupu")]
-    [Tooltip("Czy gracz może zamknąć to okno klikając w tło obok niego?")]
-    public bool closeOnOutsideClick = true;
-
-    // Metoda gotowa do podpięcia pod niewidzialny przycisk w tle popupu w Unity
-    public void OnBackgroundClicked()
+    // Metoda gotowa do podpięcia pod przycisk "X" lub "Wyjdź"
+    public virtual void ClosePopup()
     {
-        if (closeOnOutsideClick && _uiManager != null)
+        if (_uiManager != null)
         {
             _uiManager.CloseCurrentPopup();
         }

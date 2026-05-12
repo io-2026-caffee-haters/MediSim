@@ -10,9 +10,9 @@ public class SymptomDTOTests
         // Arrange
         var original = new SymptomDTO
         {
-            id = "S_FEVER",
+            id = 10,
             name = "Gorączka",
-            isVisibleToNakedEye = false
+            isVisible = false
         };
 
         // Act
@@ -23,6 +23,6 @@ public class SymptomDTOTests
         Assert.IsNotNull(deserialized);
         Assert.AreEqual(original.id, deserialized.id);
         Assert.AreEqual(original.name, deserialized.name);
-        Assert.AreEqual(original.isVisibleToNakedEye, deserialized.isVisibleToNakedEye);
+        Assert.AreEqual(original.isVisible, deserialized.isVisible);
     }
 }

@@ -6,6 +6,9 @@ using System.Linq;
 
 public class SessionResultView : PopupView
 {
+    [Header("UI - Zamknięcie")]
+    [SerializeField] private Button _closeButton;
+
     [Header("UI - Wybór Diagnozy")]
     [SerializeField] private TMP_Dropdown _diseaseDropdown; // Wybór choroby
     [SerializeField] private Button _submitButton;
@@ -32,6 +35,8 @@ public class SessionResultView : PopupView
         // Podpinamy przyciski z kodu!
         _submitButton.onClick.AddListener(EvaluateDiagnosis);
         _nextPatientButton.onClick.AddListener(NextPatient);
+
+        _closeButton.onClick.AddListener(ClosePopup);
     }
 
     public override void Show()

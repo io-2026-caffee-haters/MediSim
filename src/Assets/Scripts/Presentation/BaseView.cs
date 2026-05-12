@@ -4,10 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public abstract class BaseView : MonoBehaviour
 {
-    [Header("Ustawienia Widoku")]
-    [Tooltip("Jeśli true, okienko nałoży się na poprzedni widok bez ukrywania go (np. menu pauzy).")]
-    public bool isPopup = false;
-
     // Zmienne protected – ukryte dla innych klas, ale widoczne dla klas dziedziczących (np. MainMenuView)
     protected UIManager _uiManager;
     protected CanvasGroup _canvasGroup;

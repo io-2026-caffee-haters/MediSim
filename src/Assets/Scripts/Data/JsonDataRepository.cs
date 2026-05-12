@@ -48,25 +48,29 @@ public class JsonDataRepository : IDataRepository
 
         // 2. Wczytujemy i budujemy OBJAWY (Zawsze jako pierwsze, bo nie mają zależności)
         var symData = JsonUtility.FromJson<SymptomListWrapper>(symptomsJson);
-        if (symData?.items != null)
+        if (symData?.symptoms != null)
         {
-            foreach (var dto in symData.items)
+            foreach (var dto in symData.symptoms)
             {
-                _symptoms[dto.id] = new Symptom(dto.id, dto.name, dto.isVisibleToNakedEye);
+                _symptoms[dto.id.ToString()] = new Symptom(dto.id.ToString(), dto.name, dto.isVisible);
             }
+        }
+        else
+        {
+            Debug.LogError("Nie udało się zdeserializować listy objawów. symData.symptoms jest null.");
         }
 
         // 3. Wczytujemy i budujemy CHOROBY (Hydracja / Zszywanie relacji)
         var disData = JsonUtility.FromJson<DiseaseListWrapper>(diseasesJson);
-        if (disData?.items != null)
+        if (disData?.diseases != null)
         {
-            foreach (var dto in disData.items)
+            foreach (var dto in disData.diseases)
             {
                 // Szukamy prawdziwych obiektów Symptom na podstawie ID z DTO
                 var actualSymptoms = new List<Symptom>();
                 foreach (var symId in dto.symptomIds)
                 {
-                    if (_symptoms.TryGetValue(symId, out Symptom foundSymptom))
+                    if (_symptoms.TryGetValue(symId.ToString(), out Symptom foundSymptom))
                     {
                         actualSymptoms.Add(foundSymptom);
                     }
@@ -76,28 +80,36 @@ public class JsonDataRepository : IDataRepository
                     }
                 }
 
-                _diseases[dto.id] = new Disease(dto.id, dto.name, actualSymptoms);
+                _diseases[dto.id.ToString()] = new Disease(dto.id.ToString(), dto.name, actualSymptoms);
             }
+        }
+        else
+        {
+            Debug.LogError("Nie udało się zdeserializować listy chorób. symData.diseases jest null.");
         }
 
         // 4. Wczytujemy i budujemy TESTY MEDYCZNE
         var testData = JsonUtility.FromJson<TestListWrapper>(testsJson);
-        if (testData?.items != null)
+        if (testData?.medicaltests != null)
         {
-            foreach (var dto in testData.items)
+            foreach (var dto in testData.medicaltests)
             {
                 // Hydrate the symptoms
                 var actualSymptoms = new List<Symptom>();
                 foreach (var symId in dto.detectableSymptomIds)
                 {
-                    if (_symptoms.TryGetValue(symId, out Symptom foundSymptom))
+                    if (_symptoms.TryGetValue(symId.ToString(), out Symptom foundSymptom))
                     {
                         actualSymptoms.Add(foundSymptom);
                     }
                 }
 
-                _tests[dto.id] = new MedicalTest(dto.name, dto.baseDuration, actualSymptoms);
+                _tests[dto.id.ToString()] = new MedicalTest(dto.name, dto.timeCost, actualSymptoms);
             }
+        }
+        else
+        {
+            Debug.LogError("Nie udało się zdeserializować listy testów. symData.medicaltests jest null.");
         }
     }
 
@@ -132,11 +144,11 @@ public class JsonDataRepository : IDataRepository
     // Wymaga obiektu, który tę listę posiada {"items": [...]}.
     
     [Serializable]
-    private class SymptomListWrapper { public List<SymptomDTO> items; }
+    private class SymptomListWrapper { public List<SymptomDTO> symptoms; }
     
     [Serializable]
-    private class DiseaseListWrapper { public List<DiseaseDTO> items; }
+    private class DiseaseListWrapper { public List<DiseaseDTO> diseases; }
     
     [Serializable]
-    private class TestListWrapper { public List<MedicalTestDTO> items; }
+    private class TestListWrapper { public List<MedicalTestDTO> medicaltests; }
 }

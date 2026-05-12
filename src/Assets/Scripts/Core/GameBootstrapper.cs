@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameBootstrapper : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class GameBootstrapper : MonoBehaviour
         _sessionResultView.Inject(patientManager, _gameLoopManager, dataRepository);
         _encyclopediaView.Inject(dataRepository);
         _notesView.Inject(patientManager);
+        _patientView.InjectPopups(_medicalTestView, _sessionResultView, _notesView, _encyclopediaView);
 
         // ==========================================
         // ETAP 4: PODPINANIE ZDARZEŃ (EVENTS)
@@ -90,7 +92,7 @@ public class GameBootstrapper : MonoBehaviour
     private void Update()
     {
         // 1. Obsługa wejścia (Klawisz ESC)
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             TogglePause();
         }

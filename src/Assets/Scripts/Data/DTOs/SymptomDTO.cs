@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class SymptomDTO
 {
-    public string id;
+    public int id;
     public string name;
-    public bool isVisibleToNakedEye;
+    public bool isVisible;
 }

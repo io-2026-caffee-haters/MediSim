@@ -4,8 +4,9 @@ using System.Collections.Generic;
 [Serializable]
 public class MedicalTestDTO
 {
-    public string id;
+    public int id;
     public string name;
-    public float baseDuration;
-    public List<string> detectableSymptomIds;
+    public float cooldown;
+    public List<int> detectableSymptomIds;
+    public float timeCost;
 }

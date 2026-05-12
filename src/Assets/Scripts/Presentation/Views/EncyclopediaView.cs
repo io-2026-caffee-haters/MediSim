@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class EncyclopediaView : PopupView
 {
+    [Header("UI - Zamknięcie")]
+    [SerializeField] private Button _closeButton;
+
     [Header("Lista Chorób (Lewa Strona)")]
     [SerializeField] private Transform _diseaseListContainer;
     [SerializeField] private Button _diseaseButtonPrefab;
@@ -19,6 +22,8 @@ public class EncyclopediaView : PopupView
     {
         _dataRepository = dataRepository;
         GenerateDiseaseList();
+
+        _closeButton.onClick.AddListener(ClosePopup);
     }
 
     private void GenerateDiseaseList()

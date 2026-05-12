@@ -1,8 +1,13 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class NotesView : PopupView
 {
+    [Header("UI - Zamknięcie")]
+    [SerializeField] private Button _closeButton;
+
     [Header("Referencje Notatnika")]
     [SerializeField] private TMP_InputField _notesInputField;
     
@@ -15,6 +20,8 @@ public class NotesView : PopupView
         // Podpinamy się pod wbudowany event w TMP_InputField,
         // który odpala się za każdym razem, gdy gracz zmieni tekst.
         _notesInputField.onValueChanged.AddListener(SaveNotes);
+
+        _closeButton.onClick.AddListener(ClosePopup);
     }
 
     // Nadpisujemy metodę Show z BaseView, żeby przy otwarciu notatnika

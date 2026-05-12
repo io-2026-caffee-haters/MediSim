@@ -21,9 +21,7 @@ public class PatientManager
         _random = new Random();
     }
 
-    /// <summary>
-    /// Tworzy nowego pacjenta losując chorobę z bazy danych.
-    /// </summary>
+    // Tworzy nowego pacjenta losując chorobę z bazy danych.
     public void SpawnNewPatient()
     {
         // 1. Pobieramy wszystkie dostępne choroby z bazy
@@ -49,9 +47,7 @@ public class PatientManager
         OnPatientSpawned?.Invoke(CurrentPatient);
     }
 
-    /// <summary>
-    /// Służy do odtworzenia pacjenta na podstawie pliku zapisu.
-    /// </summary>
+    // Służy do odtworzenia pacjenta na podstawie pliku zapisu.
     public void RestorePatientState(string savedDiseaseId, string savedNotes)
     {
         Disease savedDisease = _dataRepository.GetDiseaseById(savedDiseaseId);
@@ -72,9 +68,7 @@ public class PatientManager
         }
     }
 
-    /// <summary>
-    /// Sprawdza, czy gracz poprawnie rozpoznał chorobę.
-    /// </summary>
+    // Sprawdza, czy gracz poprawnie rozpoznał chorobę.
     public bool EvaluateDiagnosis(Disease selectedDisease)
     {
         // Edge Cases: Upewniamy się, że obiekty w ogóle istnieją

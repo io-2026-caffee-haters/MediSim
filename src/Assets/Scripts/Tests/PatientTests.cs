@@ -29,7 +29,7 @@ public class PatientTests
 
         // Act
         // Zakładamy, że metoda EvaluateDiagnosis będzie przyjmować obiekt Disease
-        bool result = patient.EvaluateDiagnosis(disease);
+        bool result = patient.EvaluateDiagnosis(disease.id);
 
         // Assert
         Assert.IsTrue(result, "Diagnoza powinna być poprawna dla tej samej choroby.");

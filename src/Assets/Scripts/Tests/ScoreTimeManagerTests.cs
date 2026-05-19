@@ -12,23 +12,12 @@ public class ScoreTimeManagerTests
         _scoreTimeManager = new ScoreTimeManager(100f, 0);
     }
 
-    // Constructor
     [Test]
     public void Constructor_SetsInitialValuesCorrectly()
     {
         // Act & Assert
         Assert.AreEqual(100f, _scoreTimeManager.RemainingTime);
         Assert.AreEqual(0, _scoreTimeManager.CurrentScore);
-    }
-
-    // Time
-    public void AddTime_IncreasesRemainingTime()
-    {
-        // Act
-        _scoreTimeManager.AddTime(15.5f);
-
-        // Assert
-        Assert.AreEqual(115.5f, _scoreTimeManager.RemainingTime);
     }
 
     [Test]
@@ -51,7 +40,6 @@ public class ScoreTimeManagerTests
         Assert.AreEqual(0f, _scoreTimeManager.RemainingTime);
     }
 
-    // Score
     [Test]
     public void AddScore_IncreasesCurrentScore()
     {
@@ -64,23 +52,9 @@ public class ScoreTimeManagerTests
     }
     
     [Test]
-    public void RemoveScore_DecreasesCurrentScoreAfterIncrease()
+    public void AddScore_DoesNotAcceptNegativeValues()
     {
-        // Act
-        _scoreTimeManager.AddScore(50);
-        _scoreTimeManager.RemoveScore(25);
-        _scoreTimeManager.RemoveScore(10);
-
-        // Assert
-        Assert.AreEqual(15, _scoreTimeManager.CurrentScore);
-    }
-
-    public void RemoveScore_DoesNotDropBelowZero()
-    {
-        // Act
-        _scoreTimeManager.RemoveScore(150); // More than the starting 0
-
-        // Assert
-        Assert.AreEqual(0, _scoreTimeManager.CurrentScore);
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => _scoreTimeManager.AddScore(-10));
     }
 }

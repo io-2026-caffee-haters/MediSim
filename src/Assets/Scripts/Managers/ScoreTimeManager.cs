@@ -11,6 +11,11 @@ public class ScoreTimeManager
         CurrentScore = startingScore;
     }
 
+    public void AddTime(float amount)
+    {
+        RemainingTime = Math.Max(0f, RemainingTime + amount);
+    }
+
     public void RemoveTime(float amount)
     {
         RemainingTime = Math.Max(0f, RemainingTime - amount);
@@ -18,11 +23,11 @@ public class ScoreTimeManager
 
     public void AddScore(int amount)
     {
-        if (amount < 0)
-        {
-            throw new ArgumentException("Wartość dodawanych punktów nie może być ujemna.");
-        }
-        
-        CurrentScore += amount;
+        CurrentScore = Math.Max(0, CurrentScore + amount);
+    }
+
+    public void RemoveScore(int amount)
+    {        
+        CurrentScore = Math.Max(0, CurrentScore - amount);
     }
 }

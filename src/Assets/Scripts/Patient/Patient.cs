@@ -41,13 +41,6 @@ public class Patient : MonoBehaviour
         /// Znajduje MedicalTestManager na scenie
         MedicalTestManager testManager = Object.FindFirstObjectByType<MedicalTestManager>();
 
-        if (EvaluateDiagnosis(4) == false) 
-        {
-
-            Debug.Log($"<color=red>BŁĘDNA DIAGNOZA</color> | Poprawne ID choryby: {myDisease.id}");
-
-        }
-
         if (testManager != null) 
         {
 
@@ -57,20 +50,20 @@ public class Patient : MonoBehaviour
         }
         else 
         {
-            
+
             Debug.LogError("Patient: Nie znaleziono MedicalTestManager na scenie");
 
         }
         
     }
 
-    public bool EvaluateDiagnosis(int diseaseid)
+    public bool EvaluateDiagnosis(Disease disease)
     {
-        if (diseaseid < 1 || myDisease == null) 
+        if (disease == null || myDisease == null) 
         return false;
 
         // Porównujemy ID wybranej choroby z ID choroby pacjenta
-        return diseaseid == myDisease.id;
+        return disease.id == myDisease.id;
     }
 
     /// Metoda wypisująca wszystkie symptomy pacjenta.

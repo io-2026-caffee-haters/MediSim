@@ -9,6 +9,7 @@ public class MedicalTestView : MonoBehaviour
 
     public TextMeshProUGUI interviewResult; 
     public GameObject medicalTestPanel;      
+    public TextMeshProUGUI medicalTestTitle; 
     public TextMeshProUGUI medicalTestResult;  
     public Button closeButton;         
 
@@ -49,6 +50,7 @@ public class MedicalTestView : MonoBehaviour
         {
             if (medicalTestPanel != null)
             {
+                medicalTestTitle.text = result.testName;
                 medicalTestResult.text = result.GetSummary();
                 medicalTestPanel.SetActive(true);
             }

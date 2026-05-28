@@ -2206,6 +2206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MediSim.Runtime::MedicalTestManager
   databaseManager: {fileID: 1040289026}
+  scoreTimeController: {fileID: 2061394197}
   currentActivePatient: {fileID: 0}
 --- !u!4 &1065953047
 Transform:

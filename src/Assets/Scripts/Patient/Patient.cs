@@ -45,7 +45,7 @@ public class Patient : MonoBehaviour
         {
 
             /// Wykonuje badanie o ID = 0 (wywiad)
-            testManager.ExecuteTest(0, this);
+            testManager.ExecuteTest(0);
 
         }
         else 
@@ -55,6 +55,15 @@ public class Patient : MonoBehaviour
 
         }
         
+    }
+
+    public bool EvaluateDiagnosis(Disease disease)
+    {
+        if (disease == null || myDisease == null) 
+        return false;
+
+        // Porównujemy ID wybranej choroby z ID choroby pacjenta
+        return disease.id == myDisease.id;
     }
 
     /// Metoda wypisująca wszystkie symptomy pacjenta.

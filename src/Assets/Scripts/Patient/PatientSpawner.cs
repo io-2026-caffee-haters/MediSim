@@ -13,7 +13,7 @@ public class PatientSpawner : MonoBehaviour
     /// Ustawienia spawnu pacjenta.
     public GameObject patientPrefab; /// Wizualny obiekt pacjenta.
     public Transform spawnPoint; /// Pozycja spawnu pacjenta.
-
+    public Transform patientContainer; /// Kontener w którym tworzy się pacjent (aby nie zakrywał innych paneli).
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class PatientSpawner : MonoBehaviour
         /// Sprawdza czy baza danych została poprawnie załadowana.
         if (databaseManager.diseasesList == null || databaseManager.diseasesList.Count == 0)
         {
-            Debug.LogError("Baza chorób jest pusta!");
+            Debug.LogError("PatientSpawner: Baza chorób jest pusta!");
             return;
         }
 
@@ -53,18 +53,25 @@ public class PatientSpawner : MonoBehaviour
         /// Tworzy fizyczny obiekt pacjenta na scenie w miejscu spawnPoint.
         Vector3 pos = spawnPoint != null ? spawnPoint.position : Vector3.zero;
         GameObject newPatientObj = Instantiate(patientPrefab, spawnPoint.position, Quaternion.identity);
-        newPatientObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+
+        if (patientContainer != null)
+        {
+            newPatientObj.transform.SetParent(patientContainer, false);
+        }
+        else
+        {
+            newPatientObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        }
 
         /// Pobiera skrypt Patient i przekazuje mu wylosowane dane.
         Patient patientScript = newPatientObj.GetComponent<Patient>();
-        
         if (patientScript != null)
         {
-            patientScript.Initialize(randomDisease, patientSymptoms); //
-        }
-        else 
-        {
-            Debug.LogError("PatientSpawner: Prefab pacjenta nie posiada skryptu 'Patient'");
+
+            patientScript.Initialize(randomDisease, patientSymptoms);
+            
+            /// Rejestruje pacjenta w managerze od razu po spawnie.
+            Object.FindFirstObjectByType<MedicalTestManager>().currentActivePatient = patientScript;
         }
 
     }

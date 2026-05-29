@@ -19,4 +19,19 @@ public class PatientTests
         Assert.AreEqual(1, patient.allPatientSymptoms.Count);
     }
     
+    [Test]
+    public void EvaluateDiagnosis_ReturnsTrue_WhenDiseaseMatches()
+    {
+        // Arrange
+        var disease = new Disease { id = 1, name = "Grypa" };
+        var patient = new GameObject().AddComponent<Patient>();
+        patient.Initialize(disease, new List<Symptom>());
+
+        // Act
+        // Zakładamy, że metoda EvaluateDiagnosis będzie przyjmować obiekt Disease
+        bool result = patient.EvaluateDiagnosis(disease);
+
+        // Assert
+        Assert.IsTrue(result, "Diagnoza powinna być poprawna dla tej samej choroby.");
+    }
 }

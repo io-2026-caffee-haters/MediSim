@@ -47,7 +47,7 @@ public class ScoreTimeController : MonoBehaviour
     }
 
     private void TriggerGameOver()
-{
+    {
         // Zamykamy kłódkę - Update() już tu nie wejdzie
         _isGameOver = true;
     
@@ -74,4 +74,33 @@ public class ScoreTimeController : MonoBehaviour
             }
         }
     }
+
+    public void DeductTimeCost(int cost)
+    {
+        if (_scoreTimeManager != null && cost > 0)
+        {
+            _scoreTimeManager.RemoveTime((float)cost);
+            
+            if (scoreTimeView != null)
+            {
+                scoreTimeView.UpdateTime(_scoreTimeManager.RemainingTime);
+            }
+            
+            Debug.Log($"<color=orange>ODJĘTO {cost} | ZOSTAŁO {_scoreTimeManager.RemainingTime}s.</color>");
+        }
+    }
+
+    public int GetCurrentScore() => _scoreTimeManager != null ? _scoreTimeManager.CurrentScore : 0;
+
+    public float GetRemainingTime() => _scoreTimeManager != null ? _scoreTimeManager.RemainingTime : 0f;
+
+    public void RestoreState(float time, int score)
+    {
+        _scoreTimeManager = new ScoreTimeManager(time, score);
+        if (scoreTimeView != null)
+        {
+            scoreTimeView.RefreshView(time, score);
+        }
+    }
+
 }

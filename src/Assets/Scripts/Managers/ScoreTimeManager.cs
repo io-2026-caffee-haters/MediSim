@@ -30,4 +30,5 @@ public class ScoreTimeManager
     {        
         CurrentScore = Math.Max(0, CurrentScore - amount);
     }
+
 }

@@ -17,7 +17,11 @@ public class PatientSpawner : MonoBehaviour
 
     void Start()
     {
-        /// Wywołuje funkcje z lekkim opóźnieniem, aby DatabaseManager wczytał dane.
+        if (SaveLoadController.IsLoadingGame)
+        {
+            return; 
+        }
+
         Invoke("SpawnPatient", 0.2f);
     }
 
@@ -74,6 +78,58 @@ public class PatientSpawner : MonoBehaviour
             Object.FindFirstObjectByType<MedicalTestManager>().currentActivePatient = patientScript;
         }
 
+    }
+
+    public void SpawnPatientFromLoad(string diseaseId)
+    {
+
+        CancelInvoke("SpawnPatient");
+
+        if (databaseManager.diseasesList == null || databaseManager.diseasesList.Count == 0)
+        {
+            Debug.LogError("PatientSpawner (Load): Baza chorób jest pusta!");
+            return;
+        }
+
+        Disease loadedDisease = databaseManager.diseasesList.Find(d => d.id.ToString() == diseaseId);
+        if (loadedDisease == null)
+        {
+            Debug.LogError($"PatientSpawner (Load): Nie znaleziono choroby o ID {diseaseId}");
+            return;
+        }
+
+        List<Symptom> patientSymptoms = new List<Symptom>();
+        foreach (int sId in loadedDisease.symptomIds)
+        {
+            Symptom foundSymptom = databaseManager.symptomsList.Find(s => s.id == sId);
+            if (foundSymptom != null)
+            {
+                patientSymptoms.Add(foundSymptom);
+            }
+        }
+
+        GameObject newPatientObj = Instantiate(patientPrefab, spawnPoint.position, Quaternion.identity);
+
+        if (patientContainer != null)
+        {
+            newPatientObj.transform.SetParent(patientContainer, false);
+        }
+        else
+        {
+            newPatientObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        }
+
+        Patient patientScript = newPatientObj.GetComponent<Patient>();
+        if (patientScript != null)
+        {
+            patientScript.Initialize(loadedDisease, patientSymptoms);
+            
+            MedicalTestManager testManager = Object.FindFirstObjectByType<MedicalTestManager>();
+            if (testManager != null)
+            {
+                testManager.currentActivePatient = patientScript;
+            }
+        }
     }
 
 }

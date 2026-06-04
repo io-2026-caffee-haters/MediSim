@@ -90,4 +90,17 @@ public class ScoreTimeController : MonoBehaviour
         }
     }
 
+    public int GetCurrentScore() => _scoreTimeManager != null ? _scoreTimeManager.CurrentScore : 0;
+
+    public float GetRemainingTime() => _scoreTimeManager != null ? _scoreTimeManager.RemainingTime : 0f;
+
+    public void RestoreState(float time, int score)
+    {
+        _scoreTimeManager = new ScoreTimeManager(time, score);
+        if (scoreTimeView != null)
+        {
+            scoreTimeView.RefreshView(time, score);
+        }
+    }
+
 }

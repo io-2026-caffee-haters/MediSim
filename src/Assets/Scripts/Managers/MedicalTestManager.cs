@@ -78,4 +78,18 @@ public class MedicalTestManager : MonoBehaviour
 
     }
 
+    public Dictionary<int, float> GetCooldowns()
+    {
+        return nextAvailableTime;
+    }
+
+    public void RestoreCooldowns(List<int> ids, List<float> remainingTimes)
+    {
+        nextAvailableTime.Clear();
+        for (int i = 0; i < ids.Count; i++)
+        {
+            nextAvailableTime[ids[i]] = Time.time + remainingTimes[i];
+        }
+    }
+
 }

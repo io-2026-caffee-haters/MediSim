@@ -4,6 +4,9 @@ public class ScoreTimeController : MonoBehaviour
 {
     [Header("Referencje")]
     public ScoreTimeView scoreTimeView;
+    
+    [Header("Game Over UI")]
+    public GameOverView gameOverView;
 
     // Zmienna blokująca wielokrotne wywołanie Game Over
     private bool _isGameOver = false;
@@ -53,9 +56,15 @@ public class ScoreTimeController : MonoBehaviour
     
         Debug.Log("Czas minął! Odpalam GameOverView.");
 
-        // === TUTAJ ODPALASZ SWÓJ WIDOK/SCENĘ ===
-
-        // _uiManager.OpenView(gameOverViewPanel);
+        if (gameOverView != null)
+        {
+            // Przekazanie wyniku i wyświetlenie ekranu
+            gameOverView.DisplayResults(_scoreTimeManager.CurrentScore);
+        }
+        else
+        {
+            Debug.LogError("ScoreTimeController: Nie przypisano 'gameOverView' w Inspektorze!");
+        }
     }
 
     /// <summary>

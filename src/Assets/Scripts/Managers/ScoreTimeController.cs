@@ -75,6 +75,35 @@ public class ScoreTimeController : MonoBehaviour
         }
     }
 
+    public void DeductPoints(int points)
+    {
+        if (_scoreTimeManager != null)
+        {
+            _scoreTimeManager.RemoveScore(points);
+            
+            // Odświeżamy tylko punkty w UI
+            if (scoreTimeView != null)
+            {
+                scoreTimeView.UpdateScore(_scoreTimeManager.CurrentScore);
+            }
+        }
+    }
+
+    public void AddTimeCost(int cost)
+    {
+        if (_scoreTimeManager != null && cost > 0)
+        {
+            _scoreTimeManager.AddTime((float)cost);
+            
+            if (scoreTimeView != null)
+            {
+                scoreTimeView.UpdateTime(_scoreTimeManager.RemainingTime);
+            }
+            
+            Debug.Log($"<color=orange>ODJĘTO {cost} | ZOSTAŁO {_scoreTimeManager.RemainingTime}s.</color>");
+        }
+    }
+
     public void DeductTimeCost(int cost)
     {
         if (_scoreTimeManager != null && cost > 0)

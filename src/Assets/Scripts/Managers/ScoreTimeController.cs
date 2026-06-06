@@ -4,6 +4,9 @@ public class ScoreTimeController : MonoBehaviour
 {
     [Header("Referencje")]
     public ScoreTimeView scoreTimeView;
+    
+    [Header("Game Over UI")]
+    public GameOverView gameOverView;
 
     // Zmienna blokująca wielokrotne wywołanie Game Over
     private bool _isGameOver = false;
@@ -53,9 +56,15 @@ public class ScoreTimeController : MonoBehaviour
     
         Debug.Log("Czas minął! Odpalam GameOverView.");
 
-        // === TUTAJ ODPALASZ SWÓJ WIDOK/SCENĘ ===
-
-        // _uiManager.OpenView(gameOverViewPanel);
+        if (gameOverView != null)
+        {
+            // Przekazanie wyniku i wyświetlenie ekranu
+            gameOverView.DisplayResults(_scoreTimeManager.CurrentScore);
+        }
+        else
+        {
+            Debug.LogError("ScoreTimeController: Nie przypisano 'gameOverView' w Inspektorze!");
+        }
     }
 
     /// <summary>
@@ -72,6 +81,35 @@ public class ScoreTimeController : MonoBehaviour
             {
                 scoreTimeView.UpdateScore(_scoreTimeManager.CurrentScore);
             }
+        }
+    }
+
+    public void DeductPoints(int points)
+    {
+        if (_scoreTimeManager != null)
+        {
+            _scoreTimeManager.RemoveScore(points);
+            
+            // Odświeżamy tylko punkty w UI
+            if (scoreTimeView != null)
+            {
+                scoreTimeView.UpdateScore(_scoreTimeManager.CurrentScore);
+            }
+        }
+    }
+
+    public void AddTimeCost(int cost)
+    {
+        if (_scoreTimeManager != null && cost > 0)
+        {
+            _scoreTimeManager.AddTime((float)cost);
+            
+            if (scoreTimeView != null)
+            {
+                scoreTimeView.UpdateTime(_scoreTimeManager.RemainingTime);
+            }
+            
+            Debug.Log($"<color=orange>ODJĘTO {cost} | ZOSTAŁO {_scoreTimeManager.RemainingTime}s.</color>");
         }
     }
 

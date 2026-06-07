@@ -14,6 +14,12 @@ public class ScoreTimeController : MonoBehaviour
 
     void Start()
     {
+
+        if (SaveLoadController.IsLoadingGame) 
+        {
+            return; 
+        }
+
         // Tworzymy nową instancję managera z czasem początkowym np. 100 sekund
         _scoreTimeManager = new ScoreTimeManager(100f, 0);
 

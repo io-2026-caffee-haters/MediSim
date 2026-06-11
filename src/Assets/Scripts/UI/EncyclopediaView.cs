@@ -5,21 +5,48 @@ using System.Collections.Generic;
 
 /// Generuje i wyświetla wszystkie możliwe choroby oraz ich symptomy w postaci podręcznika.
 
-public class EncyclopediaView : MonoBehaviour
+public class EncyclopediaView : BaseView
 {
 
     /// Referencja do bazy danych.
     public DatabaseManager databaseManager;
 
-    /// Tekstowy komponent wyświetlający treść podręcznika.
     public TextMeshProUGUI diseaseTextDisplay; 
 
-    /// Odświeża listę chorób przy każdorazowym otwarciu panelu encyklopedii.
+    public GameObject openNotebookButton; 
+
+    public override void Initialize(UIManager manager) 
+    {
+        base.Initialize(manager);
+        isPopup = true; 
+    }
+
+    public void CloseThisPopup()
+    {
+        if (openNotebookButton != null)
+        {
+            openNotebookButton.SetActive(true);
+        }
+
+        if (_uiManager != null)
+        {
+            _uiManager.CloseCurrentView();
+        }
+        else
+        {
+            gameObject.SetActive(false); 
+        }
+    }
+
     private void OnEnable()
     {
         UpdateEncyclopedia();
-    }
 
+        if (openNotebookButton != null)
+        {
+            openNotebookButton.SetActive(false);
+        }
+    }
     /// Składa pełny tekst na podstawie wczytanej bazy chorób i symptomów.
     public void UpdateEncyclopedia()
     {
@@ -63,5 +90,4 @@ public class EncyclopediaView : MonoBehaviour
         diseaseTextDisplay.text = sb.ToString();
 
     }
-
 }

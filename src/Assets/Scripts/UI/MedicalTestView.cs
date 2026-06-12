@@ -31,15 +31,10 @@ public class MedicalTestView : MonoBehaviour
     {
 
         if (closeButton != null)
-            closeButton.onClick.AddListener(() => medicalTestPanel.SetActive(false));
-            
-        if (interviewResult != null)
-            interviewResult.text = "Czekam na wywiad...";
+        closeButton.onClick.AddListener(() => medicalTestPanel.SetActive(false));
 
         ClearRightSection();
         GenerateTestButtons();
-
-        if (medicalTestPanel != null) medicalTestPanel.SetActive(false);
     }
 
     public void OpenMedicalTestPanel()

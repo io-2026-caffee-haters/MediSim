@@ -115,7 +115,7 @@ public class ScoreTimeController : MonoBehaviour
                 scoreTimeView.UpdateTime(_scoreTimeManager.RemainingTime);
             }
             
-            Debug.Log($"<color=orange>ODJĘTO {cost} | ZOSTAŁO {_scoreTimeManager.RemainingTime}s.</color>");
+            Debug.Log($"<color=orange>DODANO {cost} | ZOSTAŁO {_scoreTimeManager.RemainingTime}s.</color>");
         }
     }
 

@@ -17,6 +17,9 @@ public class MainMenuView : BaseView{
 
     public void OnLoadGameClicked(){   
         Debug.Log("MainMenu: Próba wczytania gry (to be continued :)"); 
+        PlayerPrefs.SetInt("LoadGameFlag", 1);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Clinic");
     }
 
     public void OnExitClicked(){
@@ -28,4 +31,6 @@ public class MainMenuView : BaseView{
             Application.Quit(); // Zamyka gre
         #endif
     }
+
+
 }
